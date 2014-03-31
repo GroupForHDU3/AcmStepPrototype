@@ -42,7 +42,7 @@ public class UI3 extends javax.swing.JFrame implements ActionListener {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(720, 540));
 
         jLabel1.setFont(new java.awt.Font("宋体", 0, 14)); // NOI18N
         jLabel1.setText("账号：");

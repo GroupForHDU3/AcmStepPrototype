@@ -2,6 +2,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -134,6 +136,7 @@ public class DefaultUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
+    private String username;
     // End of variables declaration                   
 
     private void initImage() {
@@ -148,8 +151,17 @@ public class DefaultUI extends javax.swing.JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==jButton1)
         {
+        	
+        	username=jTextField1.getText();
+        	InfoDownload info_obj=new InfoDownload();
+    		if(info_obj.init(username)){
+    			info_obj.getinfo();
+    		}
+    		else
+    			JOptionPane.showMessageDialog(null, "账号不存在");
+    	}
             this.dispose();
             new MainUI().setVisible(true);
         }
     }
-}
+

@@ -1,7 +1,17 @@
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 
 
@@ -23,7 +33,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     public MainUI() {
         initComponents();
         initListener();
-        initImage();
+        initChart();
     }
 
     /**
@@ -35,317 +45,299 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox();
-        jButton4 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jComboBox3 = new javax.swing.JComboBox();
-        jButton5 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        TabbedPane = new javax.swing.JTabbedPane();
+        mainPagePanel = new javax.swing.JPanel();
+        historyPanel = new javax.swing.JPanel();
+        hisComboBox = new javax.swing.JComboBox();
+        dateTextField0 = new javax.swing.JTextField();
+        dateTextField1 = new javax.swing.JTextField();
+        his_Button = new javax.swing.JButton();
+        hisPanel1 = new ChartPanel(null);
+        lightPointPanel = new javax.swing.JPanel();
+        distencePanel = new javax.swing.JPanel();
+        disLabel = new javax.swing.JLabel();
+        disTextField = new javax.swing.JTextField();
+        disComboBox = new javax.swing.JComboBox();
+        disButton = new javax.swing.JButton();
+        recommendationPanel = new javax.swing.JPanel();
+        recomComboBox = new javax.swing.JComboBox();
+        recomButton = new javax.swing.JButton();
+        mainPanel = new javax.swing.JPanel();
+        accountLabel = new javax.swing.JLabel();
+        accountTextField = new javax.swing.JTextField();
+        switchAccountButton = new javax.swing.JButton();
+        Separator = new javax.swing.JSeparator();
+        MenuBar = new javax.swing.JMenuBar();
+        docMenu = new javax.swing.JMenu();
+        docMenuItem0 = new javax.swing.JMenuItem();
+        docMenuItem1 = new javax.swing.JMenuItem();
+        sysMenu = new javax.swing.JMenu();
+        sysMenuItem0 = new javax.swing.JMenuItem();
+        sysMenuItem1 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 740));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
-        jTabbedPane1.setToolTipText("");
-        jTabbedPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        TabbedPane.setToolTipText("");
+        TabbedPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addContainerGap(618, Short.MAX_VALUE))
+        javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
+        mainPagePanel.setLayout(mainPagePanelLayout);
+        mainPagePanelLayout.setHorizontalGroup(
+            mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 628, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8)
-                .addContainerGap(360, Short.MAX_VALUE))
+        mainPagePanelLayout.setVerticalGroup(
+            mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 370, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("主页", jPanel6);
+        TabbedPane.addTab("主页", mainPagePanel);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间", "按时间区间" }));
+        hisComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间", "按时间区间" }));
 
-        jTextField2.setText("输入起始日期");
+        dateTextField0.setText("输入起始日期");
 
-        jTextField3.setText("输入结束日期");
+        dateTextField1.setText("输入结束日期");
 
-        jButton3.setText("查询");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        his_Button.setText("查询");
+        his_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                his_ButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout hisPanel1Layout = new javax.swing.GroupLayout(hisPanel1);
+        hisPanel1.setLayout(hisPanel1Layout);
+        hisPanel1Layout.setHorizontalGroup(
+            hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        hisPanel1Layout.setVerticalGroup(
+            hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 331, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout historyPanelLayout = new javax.swing.GroupLayout(historyPanel);
+        historyPanel.setLayout(historyPanelLayout);
+        historyPanelLayout.setHorizontalGroup(
+            historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(historyPanelLayout.createSequentialGroup()
+                        .addComponent(hisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateTextField0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)))
-                .addContainerGap(293, Short.MAX_VALUE))
+                        .addComponent(his_Button)
+                        .addContainerGap(293, Short.MAX_VALUE))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        historyPanelLayout.setVerticalGroup(
+            historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateTextField0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(his_Button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(325, Short.MAX_VALUE))
+                .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("我的历史", jPanel2);
+        TabbedPane.addTab("我的历史", historyPanel);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(618, Short.MAX_VALUE))
+        javax.swing.GroupLayout lightPointPanelLayout = new javax.swing.GroupLayout(lightPointPanel);
+        lightPointPanel.setLayout(lightPointPanelLayout);
+        lightPointPanelLayout.setHorizontalGroup(
+            lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 628, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addContainerGap(360, Short.MAX_VALUE))
+        lightPointPanelLayout.setVerticalGroup(
+            lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 370, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("我的亮点", jPanel3);
+        TabbedPane.addTab("我的亮点", lightPointPanel);
 
-        jLabel3.setText("对比账号：");
+        disLabel.setText("对比账号：");
 
-        jTextField4.setText("对比账号");
+        disTextField.setText("对比账号");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间" }));
+        disComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间" }));
 
-        jButton4.setText("查询");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        disButton.setText("查询");
+        disButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                disButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout distencePanelLayout = new javax.swing.GroupLayout(distencePanel);
+        distencePanel.setLayout(distencePanelLayout);
+        distencePanelLayout.setHorizontalGroup(
+            distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(distencePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4))
-                    .addComponent(jLabel6))
+                .addComponent(disLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(disButton)
                 .addContainerGap(365, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        distencePanelLayout.setVerticalGroup(
+            distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(distencePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addGroup(distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(disLabel)
+                    .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(disButton))
+                .addContainerGap(337, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("差距对比", jPanel4);
+        TabbedPane.addTab("差距对比", distencePanel);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "默认推荐", "动态规划", "贪心", "数据结构", "图论" }));
+        recomComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "默认推荐", "动态规划", "贪心", "数据结构", "图论" }));
 
-        jButton5.setText("查询");
+        recomButton.setText("查询");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout recommendationPanelLayout = new javax.swing.GroupLayout(recommendationPanel);
+        recommendationPanel.setLayout(recommendationPanelLayout);
+        recommendationPanelLayout.setHorizontalGroup(
+            recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recommendationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5))
-                    .addComponent(jLabel7))
+                .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(recomButton)
                 .addContainerGap(481, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        recommendationPanelLayout.setVerticalGroup(
+            recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(recommendationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addContainerGap(331, Short.MAX_VALUE))
+                .addGroup(recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(recomButton))
+                .addContainerGap(337, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("荐题系统", jPanel5);
+        TabbedPane.addTab("荐题系统", recommendationPanel);
 
-        jLabel1.setText("账号：");
+        accountLabel.setText("账号：");
 
-        jTextField1.setText("请输入账号");
+        accountTextField.setText("请输入账号");
 
-        jButton1.setText("登出");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        switchAccountButton.setText("切换账号");
+        switchAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                switchAccountButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(accountLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(switchAccountButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(Separator, javax.swing.GroupLayout.Alignment.TRAILING)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountLabel)
+                    .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(switchAccountButton))
                 .addContainerGap())
         );
 
-        jMenu1.setBorder(null);
-        jMenu1.setText("文件");
-        jMenu1.setToolTipText("");
+        docMenu.setBorder(null);
+        docMenu.setText("文件");
+        docMenu.setToolTipText("");
 
-        jMenuItem1.setText("导出文件");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        docMenuItem0.setText("导出文件");
+        docMenuItem0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                docMenuItem0ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        docMenu.add(docMenuItem0);
 
-        jMenuBar1.add(jMenu1);
+        docMenuItem1.setText("导入分类");
+        docMenu.add(docMenuItem1);
 
-        jMenu2.setBorder(null);
-        jMenu2.setText("系统");
+        MenuBar.add(docMenu);
 
-        jMenuItem2.setText("更新软件");
-        jMenu2.add(jMenuItem2);
+        sysMenu.setBorder(null);
+        sysMenu.setText("系统");
 
-        jMenuItem3.setText("联系我们");
-        jMenu2.add(jMenuItem3);
+        sysMenuItem0.setText("更新软件");
+        sysMenu.add(sysMenuItem0);
 
-        jMenuBar1.add(jMenu2);
+        sysMenuItem1.setText("联系我们");
+        sysMenu.add(sysMenuItem1);
 
-        jMenu3.setText("帮助");
-        jMenuBar1.add(jMenu3);
+        MenuBar.add(sysMenu);
 
-        setJMenuBar(jMenuBar1);
+        helpMenu.setText("帮助");
+        MenuBar.add(helpMenu);
+
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(TabbedPane)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1)
+                .addComponent(TabbedPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>                        
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void his_ButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
     }                                          
+
+    private void disButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // TODO add your handling code here:
+    }                                         
+
+    private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                    
+        // TODO add your handling code here:
+    }                                                   
+
+    private void docMenuItem0ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
 
     
     
@@ -385,90 +377,81 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JSeparator Separator;
+    private javax.swing.JTabbedPane TabbedPane;
+    private javax.swing.JLabel accountLabel;
+    private javax.swing.JTextField accountTextField;
+    private javax.swing.JTextField dateTextField0;
+    private javax.swing.JTextField dateTextField1;
+    private javax.swing.JButton disButton;
+    private javax.swing.JComboBox disComboBox;
+    private javax.swing.JLabel disLabel;
+    private javax.swing.JTextField disTextField;
+    private javax.swing.JPanel distencePanel;
+    private javax.swing.JMenu docMenu;
+    private javax.swing.JMenuItem docMenuItem0;
+    private javax.swing.JMenuItem docMenuItem1;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JComboBox hisComboBox;
+    private ChartPanel hisPanel1;
+    private javax.swing.JButton his_Button;
+    private javax.swing.JPanel historyPanel;
+    private javax.swing.JPanel lightPointPanel;
+    private javax.swing.JPanel mainPagePanel;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JButton recomButton;
+    private javax.swing.JComboBox recomComboBox;
+    private javax.swing.JPanel recommendationPanel;
+    private javax.swing.JButton switchAccountButton;
+    private javax.swing.JMenu sysMenu;
+    private javax.swing.JMenuItem sysMenuItem0;
+    private javax.swing.JMenuItem sysMenuItem1;
     // End of variables declaration                   
 
-    private String imagepath = System.getProperty("user.dir")+"\\src\\image\\fenlei.jpg";
-
     public void actionPerformed(ActionEvent e) {
-         if(e.getSource()==jComboBox1)
+         if(e.getSource()==hisComboBox)
          {
-             int index = jComboBox1.getSelectedIndex();
-             if(index==0)
-                 imagepath = System.getProperty("user.dir")+"\\src\\image\\fenlei.jpg";
-             else if(index==1)
-                 imagepath = System.getProperty("user.dir")+"\\src\\image\\shijian.jpg";
+             int index = hisComboBox.getSelectedIndex();
          }
-         if(e.getSource()==jButton1)
-        {
-            this.dispose();
-            new DefaultUI().setVisible(true);
-        }
-         if(e.getSource()==jButton3)
-        {
-            //jPanel2.setVisible(true);
-            jLabel4.setIcon(new javax.swing.ImageIcon(imagepath));
-            jLabel4.setVisible(true);
-        }
-         if(e.getSource()==jButton4)
-        {
-            jLabel6.setVisible(true);
-        }
-         if(e.getSource()==jButton5)
-        {
-            jLabel7.setVisible(true);
-        }
-
+         if(e.getSource()==his_Button)
+         {
+        	 hisPanel1.setChart(createChart(createDataset()));
+         }
     }
 
     private void initListener() {
-        jButton1.addActionListener(this);
-        jButton3.addActionListener(this);
-        jButton4.addActionListener(this);
-        jButton5.addActionListener(this);
-        jComboBox1.addActionListener(this);
+        switchAccountButton.addActionListener(this);
+        his_Button.addActionListener(this);
+        disButton.addActionListener(this);
+        recomButton.addActionListener(this);
+        hisComboBox.addActionListener(this);
     }
 
-    private void initImage() {
-        jLabel5.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\image\\liangdian.jpg"));
-        jLabel6.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\image\\bijiao.jpg"));
-        jLabel6.setVisible(false);
-        jLabel7.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\image\\tuijian.jpg"));
-        jLabel7.setVisible(false);
-        jLabel8.setIcon(new javax.swing.ImageIcon(System.getProperty("user.dir")+"\\src\\image\\zhuye1.jpg"));
+
+    public static CategoryDataset createDataset() //创建柱状图数据集
+    {
+        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+        dataset.setValue(10,"a","管理人员");
+        dataset.setValue(20,"b","市场人员");
+        dataset.setValue(40,"c","开发人员");
+        dataset.setValue(15,"d","其他人员");
+        return dataset;
+    }
+    
+    public static JFreeChart createChart(CategoryDataset dataset) //用数据集创建一个图表
+    {
+        JFreeChart chart=ChartFactory.createBarChart("hi", "人员分布", 
+                "人员数量", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
+        chart.setTitle(new TextTitle("某公司组织结构图",new Font("仿宋",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
+        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
+        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
+        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,16));//设置横坐标字体
+        return chart;
+    }
+    
+    private void initChart() {
+    	
     }
 
 }

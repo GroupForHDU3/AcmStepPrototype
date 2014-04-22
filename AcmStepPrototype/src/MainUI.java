@@ -1,8 +1,26 @@
-
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,6 +44,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Administrator
  */
 public class MainUI extends javax.swing.JFrame implements ActionListener {
+    String Zimu[] = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}; 
 
     /**
      * Creates new form MainUI
@@ -33,7 +52,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     public MainUI() {
         initComponents();
         initListener();
-        initChart();
+        initCombobox();
     }
 
     /**
@@ -45,14 +64,21 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        mainPanel = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         mainPagePanel = new javax.swing.JPanel();
+        accountLabel = new javax.swing.JLabel();
+        account = new javax.swing.JLabel();
         historyPanel = new javax.swing.JPanel();
         hisComboBox = new javax.swing.JComboBox();
-        dateTextField0 = new javax.swing.JTextField();
-        dateTextField1 = new javax.swing.JTextField();
         his_Button = new javax.swing.JButton();
-        hisPanel1 = new ChartPanel(null);
+        hisPanel1 = new javax.swing.JPanel();
+        testPanel = new ChartPanel(null);
+        timeComboBox0 = new javax.swing.JComboBox();
+        timeComboBox1 = new javax.swing.JComboBox();
+        toLabel = new javax.swing.JLabel();
+        timeComboBox2 = new javax.swing.JComboBox();
+        timeComboBox3 = new javax.swing.JComboBox();
         lightPointPanel = new javax.swing.JPanel();
         distencePanel = new javax.swing.JPanel();
         disLabel = new javax.swing.JLabel();
@@ -62,44 +88,52 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         recommendationPanel = new javax.swing.JPanel();
         recomComboBox = new javax.swing.JComboBox();
         recomButton = new javax.swing.JButton();
-        mainPanel = new javax.swing.JPanel();
-        accountLabel = new javax.swing.JLabel();
-        accountTextField = new javax.swing.JTextField();
-        switchAccountButton = new javax.swing.JButton();
-        Separator = new javax.swing.JSeparator();
         MenuBar = new javax.swing.JMenuBar();
         docMenu = new javax.swing.JMenu();
         docMenuItem0 = new javax.swing.JMenuItem();
         docMenuItem1 = new javax.swing.JMenuItem();
+        accountMenu = new javax.swing.JMenu();
+        accMenuItem0 = new javax.swing.JMenuItem();
         sysMenu = new javax.swing.JMenu();
         sysMenuItem0 = new javax.swing.JMenuItem();
         sysMenuItem1 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         TabbedPane.setToolTipText("");
         TabbedPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        accountLabel.setFont(new java.awt.Font("黑体", 0, 14)); // NOI18N
+        accountLabel.setText("账号：");
+
+        account.setFont(new java.awt.Font("黑体", 0, 14)); // NOI18N
+        account.setText("null");
 
         javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
         mainPagePanel.setLayout(mainPagePanelLayout);
         mainPagePanelLayout.setHorizontalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 628, Short.MAX_VALUE)
+            .addGroup(mainPagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(account)
+                .addContainerGap(542, Short.MAX_VALUE))
         );
         mainPagePanelLayout.setVerticalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGroup(mainPagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountLabel)
+                    .addComponent(account))
+                .addContainerGap(434, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("主页", mainPagePanel);
 
         hisComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间", "按时间区间" }));
-
-        dateTextField0.setText("输入起始日期");
-
-        dateTextField1.setText("输入结束日期");
 
         his_Button.setText("查询");
         his_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -108,16 +142,42 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        javax.swing.GroupLayout testPanelLayout = new javax.swing.GroupLayout(testPanel);
+        testPanel.setLayout(testPanelLayout);
+        testPanelLayout.setHorizontalGroup(
+            testPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        testPanelLayout.setVerticalGroup(
+            testPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout hisPanel1Layout = new javax.swing.GroupLayout(hisPanel1);
         hisPanel1.setLayout(hisPanel1Layout);
         hisPanel1Layout.setHorizontalGroup(
             hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(hisPanel1Layout.createSequentialGroup()
+                .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         hisPanel1Layout.setVerticalGroup(
             hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 331, Short.MAX_VALUE)
+            .addGroup(hisPanel1Layout.createSequentialGroup()
+                .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 321, Short.MAX_VALUE))
         );
+
+        timeComboBox0.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" }));
+
+        timeComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        toLabel.setFont(new java.awt.Font("黑体", 0, 14)); // NOI18N
+        toLabel.setText("至");
+
+        timeComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" }));
+
+        timeComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
         javax.swing.GroupLayout historyPanelLayout = new javax.swing.GroupLayout(historyPanel);
         historyPanel.setLayout(historyPanelLayout);
@@ -126,16 +186,24 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(historyPanelLayout.createSequentialGroup()
+                        .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(213, 213, 213))
                     .addGroup(historyPanelLayout.createSequentialGroup()
                         .addComponent(hisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateTextField0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(timeComboBox0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(timeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(timeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(timeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(his_Button)
-                        .addContainerGap(293, Short.MAX_VALUE))))
+                        .addContainerGap(229, Short.MAX_VALUE))))
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,8 +211,11 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateTextField0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeComboBox0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(toLabel)
+                    .addComponent(timeComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(his_Button))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -160,7 +231,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         );
         lightPointPanelLayout.setVerticalGroup(
             lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 460, Short.MAX_VALUE)
         );
 
         TabbedPane.addTab("我的亮点", lightPointPanel);
@@ -202,7 +273,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                     .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disButton))
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("差距对比", distencePanel);
@@ -229,47 +300,20 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addGroup(recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(recomButton))
-                .addContainerGap(337, Short.MAX_VALUE))
+                .addContainerGap(427, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("荐题系统", recommendationPanel);
-
-        accountLabel.setText("账号：");
-
-        accountTextField.setText("请输入账号");
-
-        switchAccountButton.setText("切换账号");
-        switchAccountButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                switchAccountButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(accountLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(switchAccountButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(Separator, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(TabbedPane)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Separator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountLabel)
-                    .addComponent(accountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(switchAccountButton))
-                .addContainerGap())
+            .addComponent(TabbedPane)
         );
 
         docMenu.setBorder(null);
@@ -288,6 +332,13 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         docMenu.add(docMenuItem1);
 
         MenuBar.add(docMenu);
+
+        accountMenu.setText("账号");
+
+        accMenuItem0.setText("切换帐号");
+        accountMenu.add(accMenuItem0);
+
+        MenuBar.add(accountMenu);
 
         sysMenu.setBorder(null);
         sysMenu.setText("系统");
@@ -309,15 +360,11 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TabbedPane)
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(TabbedPane)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -330,10 +377,6 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private void disButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
     }                                         
-
-    private void switchAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                    
-        // TODO add your handling code here:
-    }                                                   
 
     private void docMenuItem0ActionPerformed(java.awt.event.ActionEvent evt) {                                             
         // TODO add your handling code here:
@@ -371,19 +414,49 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainUI().setVisible(true);
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(MainUI.class.getName()). log(Level.SEVERE, null, ex);
+                }
+                MainUI godUI = new MainUI();
+                godUI.setLocationRelativeTo(null); //窗口居中
+                godUI.setVisible(true);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+                godUI.firstLogin();
+                //System.out.println("11111");
+                godUI.initData();
+                godUI.loadChart();
+                //System.out.println("22222");
+                /*
+                Map<String,Integer> k = godUI.countType();
+                Iterator<String> iterator = typemap.keySet().iterator();
+                while(iterator.hasNext()) {
+                     String ss = iterator.next();
+                     System.out.println(ss+" "+k.get(ss));
+                }
+                  */      
             }
         });
     }
 
     // Variables declaration - do not modify                     
     private javax.swing.JMenuBar MenuBar;
-    private javax.swing.JSeparator Separator;
     private javax.swing.JTabbedPane TabbedPane;
+    private javax.swing.JMenuItem accMenuItem0;
+    private javax.swing.JLabel account;
     private javax.swing.JLabel accountLabel;
-    private javax.swing.JTextField accountTextField;
-    private javax.swing.JTextField dateTextField0;
-    private javax.swing.JTextField dateTextField1;
+    private javax.swing.JMenu accountMenu;
     private javax.swing.JButton disButton;
     private javax.swing.JComboBox disComboBox;
     private javax.swing.JLabel disLabel;
@@ -394,7 +467,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JMenuItem docMenuItem1;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JComboBox hisComboBox;
-    private ChartPanel hisPanel1;
+    private javax.swing.JPanel hisPanel1;
     private javax.swing.JButton his_Button;
     private javax.swing.JPanel historyPanel;
     private javax.swing.JPanel lightPointPanel;
@@ -403,33 +476,173 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton recomButton;
     private javax.swing.JComboBox recomComboBox;
     private javax.swing.JPanel recommendationPanel;
-    private javax.swing.JButton switchAccountButton;
     private javax.swing.JMenu sysMenu;
     private javax.swing.JMenuItem sysMenuItem0;
     private javax.swing.JMenuItem sysMenuItem1;
+    private ChartPanel testPanel;
+    private javax.swing.JComboBox timeComboBox0;
+    private javax.swing.JComboBox timeComboBox1;
+    private javax.swing.JComboBox timeComboBox2;
+    private javax.swing.JComboBox timeComboBox3;
+    private javax.swing.JLabel toLabel;
     // End of variables declaration                   
-
+    private String user_name;
+    private Map<String,Integer> timemap;
+    private Map<String,Integer> typemap;
+    private String timekey[] = new String[1000];
+    private int num;
+    private String t0, t1, t2, t3;
+    
     public void actionPerformed(ActionEvent e) {
          if(e.getSource()==hisComboBox)
          {
              int index = hisComboBox.getSelectedIndex();
+             if(index==2)
+             {
+                 timeComboBox0.setVisible(true);
+                 timeComboBox1.setVisible(true);
+                 timeComboBox2.setVisible(true);
+                 timeComboBox3.setVisible(true);
+                 toLabel.setVisible(true);
+                 his_Button.setVisible(true);
+                 
+             }
+             if(index==0)
+             {
+                 timeComboBox0.setVisible(false);
+                 timeComboBox1.setVisible(false);
+                 timeComboBox2.setVisible(false);
+                 timeComboBox3.setVisible(false);
+                 toLabel.setVisible(false);
+                 his_Button.setVisible(false);
+                 testPanel.setChart(typeCreateChart(typeCreateDataset()));
+             }
+             if(index==1)
+             {
+                 timeComboBox0.setVisible(false);
+                 timeComboBox1.setVisible(false);
+                 timeComboBox2.setVisible(false);
+                 timeComboBox3.setVisible(false);
+                 toLabel.setVisible(false);
+                 his_Button.setVisible(false);
+                 testPanel.setChart(timeCreateChart(timeCreateDataset()));
+             }
          }
-         if(e.getSource()==his_Button)
+         if(e.getSource()==accMenuItem0)
          {
-        	 hisPanel1.setChart(createChart(createDataset()));
+        	 firstLogin();
+             //System.out.println("11111");
+             initData();
+             loadChart();
+         }
+         if(e.getSource()==timeComboBox0)
+         {
+        	 t0 = (String) timeComboBox0.getSelectedItem();
+         }
+         if(e.getSource()==timeComboBox1)
+         {
+        	 t1 = (String) timeComboBox1.getSelectedItem();
+         }
+         if(e.getSource()==timeComboBox2)
+         {
+        	 t2 = (String) timeComboBox2.getSelectedItem();
+         }
+         if(e.getSource()==timeComboBox3)
+         {
+        	 t3 = (String) timeComboBox3.getSelectedItem();
+         }
+         if(e.getSource()==his_Button) 
+         {
+        	 testPanel.setChart(timeCreateChart(timeCreateDataset2()));
          }
     }
 
     private void initListener() {
-        switchAccountButton.addActionListener(this);
         his_Button.addActionListener(this);
         disButton.addActionListener(this);
         recomButton.addActionListener(this);
         hisComboBox.addActionListener(this);
+        accMenuItem0.addActionListener(this);
+        timeComboBox0.addActionListener(this);
+        timeComboBox1.addActionListener(this);
+        timeComboBox2.addActionListener(this);
+        timeComboBox3.addActionListener(this);
+    }
+    
+    public CategoryDataset typeCreateDataset() {
+        
+        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+        Iterator<String> itertype = typemap.keySet().iterator();
+        int index = 0;
+        while(itertype.hasNext()) {
+             String ss = itertype.next();
+             dataset.setValue(typemap.get(ss),Zimu[index],ss);
+             index++;
+        }
+        return dataset;
     }
 
-
-    public static CategoryDataset createDataset() //创建柱状图数据集
+    public  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+    {
+        JFreeChart chart=ChartFactory.createBarChart("hi", "类别", 
+                "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
+        chart.setTitle(new TextTitle("按分类题数",new Font("宋体",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
+        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
+        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
+        categoryAxis.setLabelFont(new Font("黑体",Font.BOLD,16));//设置横坐标字体
+        return chart;
+    }
+    
+    public  CategoryDataset timeCreateDataset2() //创建柱状图数据集
+    {
+        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+        //System.out.println(t0+t1+t2+t3);
+        int a0 = Integer.parseInt(t0);
+        int a1 = Integer.parseInt(t1);
+        int a2 = Integer.parseInt(t2);
+        int a3 = Integer.parseInt(t3);
+        int index = 0;
+        for(int i=a0; i<=a2; i++)
+        {
+        	int l=1, r=12;
+        	if(i==a0) l = a1;
+        	if(i==a2) r = a3;
+        	for(int j=l; j<=r; j++)
+        	{
+        		String ss = "";
+        		ss = ss + String.valueOf(i);
+        		if(j<10) ss = ss + "0" + String.valueOf(j);
+        		else ss = ss + String.valueOf(j);
+        		if(timemap.containsKey(ss)) {
+        			dataset.setValue(timemap.get(ss), Zimu[index], ss);
+        			index++;
+        		}
+        	}
+        }
+        return dataset;
+    }
+    
+    public  CategoryDataset timeCreateDataset() //创建柱状图数据集
+    {
+        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+        for(int i=0; i<num; i++) {
+        	dataset.setValue(timemap.get(timekey[i]),Zimu[i],timekey[i]);
+        }
+        return dataset;
+    }
+    
+    public  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+    {
+        JFreeChart chart=ChartFactory.createBarChart("hi", "时间", 
+                "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
+        chart.setTitle(new TextTitle("按时间题数",new Font("仿宋",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
+        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
+        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
+        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,16));//设置横坐标字体
+        return chart;
+    }
+    
+    public  CategoryDataset createDataset() //创建柱状图数据集
     {
         DefaultCategoryDataset dataset=new DefaultCategoryDataset();
         dataset.setValue(10,"a","管理人员");
@@ -439,19 +652,150 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         return dataset;
     }
     
-    public static JFreeChart createChart(CategoryDataset dataset) //用数据集创建一个图表
+    public  JFreeChart createChart(CategoryDataset dataset) //用数据集创建一个图表
     {
         JFreeChart chart=ChartFactory.createBarChart("hi", "人员分布", 
                 "人员数量", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
         chart.setTitle(new TextTitle("某公司组织结构图",new Font("仿宋",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
         CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
         CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,16));//设置横坐标字体
+        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,20));//设置横坐标字体
         return chart;
     }
     
-    private void initChart() {
-    	
+    
+    public void firstLogin() {
+        boolean flag = true;
+        String tip = "请输入账号";
+        while(flag) {
+            user_name = JOptionPane.showInputDialog(null, tip, "", WIDTH);
+            
+            InfoDownload info_obj = new InfoDownload();
+            if(info_obj.init(user_name)) {
+                info_obj.getinfo();
+                account.setText(user_name);
+                flag = false;
+            }
+            else {
+                tip = "账号不存在，请重新输入";
+            }
+                    
+            /*
+            account.setText(user_name);
+            flag = false;
+        */
+        }
     }
 
+
+    //获取分类的题数
+    public Map<String,Integer> countType() {
+        //System.out.println("55555");
+        String profile ="E:\\doc\\"+ user_name + "_profile.txt";
+        String sort = "E:\\doc\\sort.txt";
+        Map<String, String> sort_map = new HashMap<String, String>();
+        Map<String, Integer> ret = new HashMap<String, Integer>();
+        try {
+            BufferedReader sort_reader = new BufferedReader(new FileReader(new File(sort)));
+            String line, s[], ss[];
+            while((line=sort_reader.readLine())!=null) {
+                //System.out.println(line);
+                s = line.split(" ");
+                //System.out.println(s[0]+"->"+s[1]);
+                sort_map.put(s[0], s[1]);
+            }
+            //System.out.println("111");
+            //System.out.println(user_name);
+            //System.out.println("222");
+            BufferedReader profile_reader = new BufferedReader(new FileReader(new File(profile)));
+            while((line=profile_reader.readLine())!=null) {
+                //System.out.println(line);
+                ss = line.split("[-:\\t]+");
+                //sss = ss[3].split("	");
+                //System.out.println(ss[5]);
+                //System.out.println(sss[0]);
+                //s[6]题号
+                //System.out.println(ss[5]);
+                if(sort_map.containsKey(ss[5])) {
+                    String type = sort_map.get(ss[5]);
+                    if(ret.containsKey(type)) {
+                        ret.put(type, ret.get(type)+1);
+                    }
+                    else {
+                        ret.put(type, 1);
+                    }
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }
+    private void loadChart() {
+    	testPanel.setChart(typeCreateChart(typeCreateDataset()));
+    }
+    
+    private void initData() {
+        typemap = countType();
+        Iterator<String> itertype = typemap.keySet().iterator();
+        while(itertype.hasNext()) {
+            //System.out.println("44444444");
+             String ss = itertype.next();
+             System.out.println(ss+" "+typemap.get(ss));
+        }
+        //System.out.println("33333333");
+        DataCount dc = new DataCount();
+        dc.init(user_name);
+        timemap = dc.getdata();
+        //排序
+        num = 0;
+        Iterator<String> iter = timemap.keySet().iterator();
+        while(iter.hasNext()) {
+            //System.out.println("44444444");
+             String ss = iter.next();
+             //System.out.println(ss);
+             timekey[num] = ss;
+             num++;
+        }
+        //冒泡
+        for(int i=0; i<num-1; i++)
+        {
+        	for(int j=0; j<num-i-1; j++)
+        	{
+        		int j0 = Integer.parseInt(timekey[j]);
+        		int j1 = Integer.parseInt(timekey[j+1]);
+        		if(j0 > j1)
+        		{
+        			String tmp;
+        			tmp = timekey[j]; timekey[j] = timekey[j+1]; timekey[j+1] = tmp;
+        		}
+        	}
+        }
+        for(int i=0; i<num; i++) {
+        	System.out.println(timekey[i]);
+        }
+        
+        Iterator<String> itertime = timemap.keySet().iterator();
+        while(itertime.hasNext()) {
+             String ss = itertime.next();
+             System.out.println(ss+" "+timemap.get(ss));
+        }
+        
+    }
+    
+    private void initCombobox() {
+       timeComboBox0.setVisible(false);
+       timeComboBox1.setVisible(false);
+       timeComboBox2.setVisible(false);
+       timeComboBox3.setVisible(false);
+       toLabel.setVisible(false);
+       his_Button.setVisible(false);
+       t0 = "2004";
+       t1 = "01";
+       t2 = "2004";
+       t3 = "01";
+    }
 }

@@ -1,32 +1,27 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.awt.geom.Ellipse2D;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -66,9 +61,6 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
 
         mainPanel = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
-        mainPagePanel = new javax.swing.JPanel();
-        accountLabel = new javax.swing.JLabel();
-        account = new javax.swing.JLabel();
         historyPanel = new javax.swing.JPanel();
         hisComboBox = new javax.swing.JComboBox();
         his_Button = new javax.swing.JButton();
@@ -80,14 +72,24 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         timeComboBox2 = new javax.swing.JComboBox();
         timeComboBox3 = new javax.swing.JComboBox();
         lightPointPanel = new javax.swing.JPanel();
+        lightPoint0 = new javax.swing.JPanel();
+        lightPoint1 = new javax.swing.JPanel();
+        lightPoint2 = new javax.swing.JPanel();
+        lightPoint3 = new javax.swing.JPanel();
+        lightPoint4 = new javax.swing.JPanel();
+        lightPoint5 = new javax.swing.JPanel();
         distencePanel = new javax.swing.JPanel();
         disLabel = new javax.swing.JLabel();
         disTextField = new javax.swing.JTextField();
         disComboBox = new javax.swing.JComboBox();
         disButton = new javax.swing.JButton();
+        jPanel2 = new ChartPanel(null);
         recommendationPanel = new javax.swing.JPanel();
         recomComboBox = new javax.swing.JComboBox();
         recomButton = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        accountLabel = new javax.swing.JLabel();
+        account = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         docMenu = new javax.swing.JMenu();
         docMenuItem0 = new javax.swing.JMenuItem();
@@ -104,35 +106,6 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         TabbedPane.setToolTipText("");
         TabbedPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        accountLabel.setFont(new java.awt.Font("黑体", 0, 14)); // NOI18N
-        accountLabel.setText("账号：");
-
-        account.setFont(new java.awt.Font("黑体", 0, 14)); // NOI18N
-        account.setText("null");
-
-        javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
-        mainPagePanel.setLayout(mainPagePanelLayout);
-        mainPagePanelLayout.setHorizontalGroup(
-            mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(accountLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(account)
-                .addContainerGap(542, Short.MAX_VALUE))
-        );
-        mainPagePanelLayout.setVerticalGroup(
-            mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountLabel)
-                    .addComponent(account))
-                .addContainerGap(434, Short.MAX_VALUE))
-        );
-
-        TabbedPane.addTab("主页", mainPagePanel);
-
         hisComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "按分类", "按时间", "按时间区间" }));
 
         his_Button.setText("查询");
@@ -146,26 +119,22 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         testPanel.setLayout(testPanelLayout);
         testPanelLayout.setHorizontalGroup(
             testPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         testPanelLayout.setVerticalGroup(
             testPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 371, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout hisPanel1Layout = new javax.swing.GroupLayout(hisPanel1);
         hisPanel1.setLayout(hisPanel1Layout);
         hisPanel1Layout.setHorizontalGroup(
             hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(hisPanel1Layout.createSequentialGroup()
-                .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(testPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         hisPanel1Layout.setVerticalGroup(
             hisPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(hisPanel1Layout.createSequentialGroup()
-                .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 321, Short.MAX_VALUE))
+            .addComponent(testPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         timeComboBox0.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" }));
@@ -186,9 +155,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(historyPanelLayout.createSequentialGroup()
-                        .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(213, 213, 213))
+                    .addComponent(hisPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(historyPanelLayout.createSequentialGroup()
                         .addComponent(hisComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -203,7 +170,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                         .addComponent(timeComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(his_Button)
-                        .addContainerGap(229, Short.MAX_VALUE))))
+                        .addContainerGap(223, Short.MAX_VALUE))))
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,15 +190,103 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
 
         TabbedPane.addTab("我的历史", historyPanel);
 
+        javax.swing.GroupLayout lightPoint0Layout = new javax.swing.GroupLayout(lightPoint0);
+        lightPoint0.setLayout(lightPoint0Layout);
+        lightPoint0Layout.setHorizontalGroup(
+            lightPoint0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        lightPoint0Layout.setVerticalGroup(
+            lightPoint0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lightPoint1Layout = new javax.swing.GroupLayout(lightPoint1);
+        lightPoint1.setLayout(lightPoint1Layout);
+        lightPoint1Layout.setHorizontalGroup(
+            lightPoint1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        lightPoint1Layout.setVerticalGroup(
+            lightPoint1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lightPoint2Layout = new javax.swing.GroupLayout(lightPoint2);
+        lightPoint2.setLayout(lightPoint2Layout);
+        lightPoint2Layout.setHorizontalGroup(
+            lightPoint2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 192, Short.MAX_VALUE)
+        );
+        lightPoint2Layout.setVerticalGroup(
+            lightPoint2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lightPoint3Layout = new javax.swing.GroupLayout(lightPoint3);
+        lightPoint3.setLayout(lightPoint3Layout);
+        lightPoint3Layout.setHorizontalGroup(
+            lightPoint3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        lightPoint3Layout.setVerticalGroup(
+            lightPoint3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 190, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lightPoint4Layout = new javax.swing.GroupLayout(lightPoint4);
+        lightPoint4.setLayout(lightPoint4Layout);
+        lightPoint4Layout.setHorizontalGroup(
+            lightPoint4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        lightPoint4Layout.setVerticalGroup(
+            lightPoint4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lightPoint5Layout = new javax.swing.GroupLayout(lightPoint5);
+        lightPoint5.setLayout(lightPoint5Layout);
+        lightPoint5Layout.setHorizontalGroup(
+            lightPoint5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        lightPoint5Layout.setVerticalGroup(
+            lightPoint5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout lightPointPanelLayout = new javax.swing.GroupLayout(lightPointPanel);
         lightPointPanel.setLayout(lightPointPanelLayout);
         lightPointPanelLayout.setHorizontalGroup(
             lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 628, Short.MAX_VALUE)
+            .addGroup(lightPointPanelLayout.createSequentialGroup()
+                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lightPoint3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint0, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lightPoint1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lightPoint2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         lightPointPanelLayout.setVerticalGroup(
             lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGroup(lightPointPanelLayout.createSequentialGroup()
+                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lightPoint0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lightPoint3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lightPoint5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         TabbedPane.addTab("我的亮点", lightPointPanel);
@@ -249,20 +304,34 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 371, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout distencePanelLayout = new javax.swing.GroupLayout(distencePanel);
         distencePanel.setLayout(distencePanelLayout);
         distencePanelLayout.setHorizontalGroup(
             distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(distencePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(disLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(disButton)
-                .addContainerGap(365, Short.MAX_VALUE))
+                .addGroup(distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(distencePanelLayout.createSequentialGroup()
+                        .addComponent(disLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(disButton)
+                        .addContainerGap(359, Short.MAX_VALUE))))
         );
         distencePanelLayout.setVerticalGroup(
             distencePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,7 +342,8 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                     .addComponent(disTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(disButton))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("差距对比", distencePanel);
@@ -291,7 +361,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(recomButton)
-                .addContainerGap(481, Short.MAX_VALUE))
+                .addContainerGap(475, Short.MAX_VALUE))
         );
         recommendationPanelLayout.setVerticalGroup(
             recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,20 +370,52 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addGroup(recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(recomButton))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(377, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("荐题系统", recommendationPanel);
+
+        accountLabel.setText("当前账号：");
+
+        account.setText("null");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(accountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(account)
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(accountLabel)
+                    .addComponent(account))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(TabbedPane)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TabbedPane)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
 
         docMenu.setBorder(null);
@@ -364,7 +466,9 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 489, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -470,8 +574,15 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel hisPanel1;
     private javax.swing.JButton his_Button;
     private javax.swing.JPanel historyPanel;
+    private javax.swing.JPanel jPanel1;
+    private ChartPanel jPanel2;
+    private javax.swing.JPanel lightPoint0;
+    private javax.swing.JPanel lightPoint1;
+    private javax.swing.JPanel lightPoint2;
+    private javax.swing.JPanel lightPoint3;
+    private javax.swing.JPanel lightPoint4;
+    private javax.swing.JPanel lightPoint5;
     private javax.swing.JPanel lightPointPanel;
-    private javax.swing.JPanel mainPagePanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton recomButton;
     private javax.swing.JComboBox recomComboBox;
@@ -485,317 +596,378 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JComboBox timeComboBox2;
     private javax.swing.JComboBox timeComboBox3;
     private javax.swing.JLabel toLabel;
-    // End of variables declaration                   
+ // End of variables declaration                   
     private String user_name;
+    private String cmp_name;
     private Map<String,Integer> timemap;
     private Map<String,Integer> typemap;
+    private Map<String,Integer> cmp_timemap;
+    private Map<String,Integer> cmp_typemap;
     private String timekey[] = new String[1000];
-    private int num;
+    private String cmp_timekey[] = new String[1000];
+    private int num, cmp_num;
     private String t0, t1, t2, t3;
     
     public void actionPerformed(ActionEvent e) {
-         if(e.getSource()==hisComboBox)
-         {
-             int index = hisComboBox.getSelectedIndex();
-             if(index==2)
-             {
-                 timeComboBox0.setVisible(true);
-                 timeComboBox1.setVisible(true);
-                 timeComboBox2.setVisible(true);
-                 timeComboBox3.setVisible(true);
-                 toLabel.setVisible(true);
-                 his_Button.setVisible(true);
-                 
-             }
-             if(index==0)
-             {
-                 timeComboBox0.setVisible(false);
-                 timeComboBox1.setVisible(false);
-                 timeComboBox2.setVisible(false);
-                 timeComboBox3.setVisible(false);
-                 toLabel.setVisible(false);
-                 his_Button.setVisible(false);
-                 testPanel.setChart(typeCreateChart(typeCreateDataset()));
-             }
-             if(index==1)
-             {
-                 timeComboBox0.setVisible(false);
-                 timeComboBox1.setVisible(false);
-                 timeComboBox2.setVisible(false);
-                 timeComboBox3.setVisible(false);
-                 toLabel.setVisible(false);
-                 his_Button.setVisible(false);
-                 testPanel.setChart(timeCreateChart(timeCreateDataset()));
-             }
-         }
-         if(e.getSource()==accMenuItem0)
-         {
-        	 firstLogin();
-             //System.out.println("11111");
-             initData();
-             loadChart();
-         }
-         if(e.getSource()==timeComboBox0)
-         {
-        	 t0 = (String) timeComboBox0.getSelectedItem();
-         }
-         if(e.getSource()==timeComboBox1)
-         {
-        	 t1 = (String) timeComboBox1.getSelectedItem();
-         }
-         if(e.getSource()==timeComboBox2)
-         {
-        	 t2 = (String) timeComboBox2.getSelectedItem();
-         }
-         if(e.getSource()==timeComboBox3)
-         {
-        	 t3 = (String) timeComboBox3.getSelectedItem();
-         }
-         if(e.getSource()==his_Button) 
-         {
-        	 testPanel.setChart(timeCreateChart(timeCreateDataset2()));
-         }
-    }
-
-    private void initListener() {
-        his_Button.addActionListener(this);
-        disButton.addActionListener(this);
-        recomButton.addActionListener(this);
-        hisComboBox.addActionListener(this);
-        accMenuItem0.addActionListener(this);
-        timeComboBox0.addActionListener(this);
-        timeComboBox1.addActionListener(this);
-        timeComboBox2.addActionListener(this);
-        timeComboBox3.addActionListener(this);
-    }
-    
-    public CategoryDataset typeCreateDataset() {
-        
-        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-        Iterator<String> itertype = typemap.keySet().iterator();
-        int index = 0;
-        while(itertype.hasNext()) {
-             String ss = itertype.next();
-             dataset.setValue(typemap.get(ss),Zimu[index],ss);
-             index++;
-        }
-        return dataset;
-    }
-
-    public  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
-    {
-        JFreeChart chart=ChartFactory.createBarChart("hi", "类别", 
-                "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
-        chart.setTitle(new TextTitle("按分类题数",new Font("宋体",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
-        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
-        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-        categoryAxis.setLabelFont(new Font("黑体",Font.BOLD,16));//设置横坐标字体
-        return chart;
-    }
-    
-    public  CategoryDataset timeCreateDataset2() //创建柱状图数据集
-    {
-        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-        //System.out.println(t0+t1+t2+t3);
-        int a0 = Integer.parseInt(t0);
-        int a1 = Integer.parseInt(t1);
-        int a2 = Integer.parseInt(t2);
-        int a3 = Integer.parseInt(t3);
-        int index = 0;
-        for(int i=a0; i<=a2; i++)
+        if(e.getSource()==hisComboBox)
         {
-        	int l=1, r=12;
-        	if(i==a0) l = a1;
-        	if(i==a2) r = a3;
-        	for(int j=l; j<=r; j++)
-        	{
-        		String ss = "";
-        		ss = ss + String.valueOf(i);
-        		if(j<10) ss = ss + "0" + String.valueOf(j);
-        		else ss = ss + String.valueOf(j);
-        		if(timemap.containsKey(ss)) {
-        			dataset.setValue(timemap.get(ss), Zimu[index], ss);
-        			index++;
+            int index = hisComboBox.getSelectedIndex();
+            if(index==2)
+            {
+                timeComboBox0.setVisible(true);
+                timeComboBox1.setVisible(true);
+                timeComboBox2.setVisible(true);
+                timeComboBox3.setVisible(true);
+                toLabel.setVisible(true);
+                his_Button.setVisible(true);
+                
+            }
+            if(index==0)
+            {
+                timeComboBox0.setVisible(false);
+                timeComboBox1.setVisible(false);
+                timeComboBox2.setVisible(false);
+                timeComboBox3.setVisible(false);
+                toLabel.setVisible(false);
+                his_Button.setVisible(false);
+                testPanel.setChart(typeCreateChart(typeCreateDataset()));
+            }
+            if(index==1)
+            {
+                timeComboBox0.setVisible(false);
+                timeComboBox1.setVisible(false);
+                timeComboBox2.setVisible(false);
+                timeComboBox3.setVisible(false);
+                toLabel.setVisible(false);
+                his_Button.setVisible(false);
+                testPanel.setChart(timeCreateChart(timeCreateDataset()));
+            }
+        }
+        if(e.getSource()==accMenuItem0)
+        {
+       	 firstLogin();
+            //System.out.println("11111");
+            initData();
+            loadChart();
+        }
+        if(e.getSource()==timeComboBox0)
+        {
+       	 t0 = (String) timeComboBox0.getSelectedItem();
+        }
+        if(e.getSource()==timeComboBox1)
+        {
+       	 t1 = (String) timeComboBox1.getSelectedItem();
+        }
+        if(e.getSource()==timeComboBox2)
+        {
+       	 t2 = (String) timeComboBox2.getSelectedItem();
+        }
+        if(e.getSource()==timeComboBox3)
+        {
+       	 t3 = (String) timeComboBox3.getSelectedItem();
+        }
+        if(e.getSource()==his_Button) 
+        {
+       	 testPanel.setChart(timeCreateChart(timeCreateDataset2()));
+        }
+        if(e.getSource()==disButton)
+        {
+        	cmp_name = disTextField.getText();
+        	InfoDownload cmp = new InfoDownload();
+        	if(cmp.init(cmp_name)) {
+        		cmp.getinfo();
+        		DataCount cmp_dc = new DataCount();
+        		if(cmp_dc.init(cmp_name)) {
+        			cmp_timemap = cmp_dc.getdata();
+        			cmp_typemap = cmp_dc.countType();
+        			sort_cmp_time();
+        		}
+        		int index = disComboBox.getSelectedIndex();
+        		if(index==0) {
+        			jPanel2.setChart(typeCreateChart(typeCreateDataset2()));
+        		}
+        		else if(index==1) {
+        			jPanel2.setChart(timeCreateChart(timeCreateDataset3()));
         		}
         	}
-        }
-        return dataset;
-    }
-    
-    public  CategoryDataset timeCreateDataset() //创建柱状图数据集
-    {
-        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-        for(int i=0; i<num; i++) {
-        	dataset.setValue(timemap.get(timekey[i]),Zimu[i],timekey[i]);
-        }
-        return dataset;
-    }
-    
-    public  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
-    {
-        JFreeChart chart=ChartFactory.createBarChart("hi", "时间", 
-                "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
-        chart.setTitle(new TextTitle("按时间题数",new Font("仿宋",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
-        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
-        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,16));//设置横坐标字体
-        return chart;
-    }
-    
-    public  CategoryDataset createDataset() //创建柱状图数据集
-    {
-        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-        dataset.setValue(10,"a","管理人员");
-        dataset.setValue(20,"b","市场人员");
-        dataset.setValue(40,"c","开发人员");
-        dataset.setValue(15,"d","其他人员");
-        return dataset;
-    }
-    
-    public  JFreeChart createChart(CategoryDataset dataset) //用数据集创建一个图表
-    {
-        JFreeChart chart=ChartFactory.createBarChart("hi", "人员分布", 
-                "人员数量", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
-        chart.setTitle(new TextTitle("某公司组织结构图",new Font("仿宋",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
-        CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
-        CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-        categoryAxis.setLabelFont(new Font("仿宋",Font.BOLD,20));//设置横坐标字体
-        return chart;
-    }
-    
-    
-    public void firstLogin() {
-        boolean flag = true;
-        String tip = "请输入账号";
-        while(flag) {
-            user_name = JOptionPane.showInputDialog(null, tip, "", WIDTH);
-            
-            InfoDownload info_obj = new InfoDownload();
-            if(info_obj.init(user_name)) {
-                info_obj.getinfo();
-                account.setText(user_name);
-                flag = false;
-            }
-            else {
-                tip = "账号不存在，请重新输入";
-            }
-                    
-            /*
-            account.setText(user_name);
-            flag = false;
-        */
-        }
-    }
-
-
-    //获取分类的题数
-    public Map<String,Integer> countType() {
-        //System.out.println("55555");
-        String profile ="E:\\doc\\"+ user_name + "_profile.txt";
-        String sort = "E:\\doc\\sort.txt";
-        Map<String, String> sort_map = new HashMap<String, String>();
-        Map<String, Integer> ret = new HashMap<String, Integer>();
-        try {
-            BufferedReader sort_reader = new BufferedReader(new FileReader(new File(sort)));
-            String line, s[], ss[];
-            while((line=sort_reader.readLine())!=null) {
-                //System.out.println(line);
-                s = line.split(" ");
-                //System.out.println(s[0]+"->"+s[1]);
-                sort_map.put(s[0], s[1]);
-            }
-            //System.out.println("111");
-            //System.out.println(user_name);
-            //System.out.println("222");
-            BufferedReader profile_reader = new BufferedReader(new FileReader(new File(profile)));
-            while((line=profile_reader.readLine())!=null) {
-                //System.out.println(line);
-                ss = line.split("[-:\\t]+");
-                //sss = ss[3].split("	");
-                //System.out.println(ss[5]);
-                //System.out.println(sss[0]);
-                //s[6]题号
-                //System.out.println(ss[5]);
-                if(sort_map.containsKey(ss[5])) {
-                    String type = sort_map.get(ss[5]);
-                    if(ret.containsKey(type)) {
-                        ret.put(type, ret.get(type)+1);
-                    }
-                    else {
-                        ret.put(type, 1);
-                    }
-                }
-            }
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return ret;
-    }
-    private void loadChart() {
-    	testPanel.setChart(typeCreateChart(typeCreateDataset()));
-    }
-    
-    private void initData() {
-        typemap = countType();
-        Iterator<String> itertype = typemap.keySet().iterator();
-        while(itertype.hasNext()) {
-            //System.out.println("44444444");
-             String ss = itertype.next();
-             System.out.println(ss+" "+typemap.get(ss));
-        }
-        //System.out.println("33333333");
-        DataCount dc = new DataCount();
-        dc.init(user_name);
-        timemap = dc.getdata();
-        //排序
-        num = 0;
-        Iterator<String> iter = timemap.keySet().iterator();
-        while(iter.hasNext()) {
-            //System.out.println("44444444");
-             String ss = iter.next();
-             //System.out.println(ss);
-             timekey[num] = ss;
-             num++;
-        }
-        //冒泡
-        for(int i=0; i<num-1; i++)
-        {
-        	for(int j=0; j<num-i-1; j++)
-        	{
-        		int j0 = Integer.parseInt(timekey[j]);
-        		int j1 = Integer.parseInt(timekey[j+1]);
-        		if(j0 > j1)
-        		{
-        			String tmp;
-        			tmp = timekey[j]; timekey[j] = timekey[j+1]; timekey[j+1] = tmp;
-        		}
+        	else {
+        		JOptionPane.showMessageDialog(null, "账号不存在");
         	}
         }
-        for(int i=0; i<num; i++) {
-        	System.out.println(timekey[i]);
-        }
-        
-        Iterator<String> itertime = timemap.keySet().iterator();
-        while(itertime.hasNext()) {
-             String ss = itertime.next();
-             System.out.println(ss+" "+timemap.get(ss));
-        }
-        
-    }
-    
-    private void initCombobox() {
-       timeComboBox0.setVisible(false);
-       timeComboBox1.setVisible(false);
-       timeComboBox2.setVisible(false);
-       timeComboBox3.setVisible(false);
-       toLabel.setVisible(false);
-       his_Button.setVisible(false);
-       t0 = "2004";
-       t1 = "01";
-       t2 = "2004";
-       t3 = "01";
-    }
+   }
+
+   private void initListener() {
+       his_Button.addActionListener(this);
+       disButton.addActionListener(this);
+       recomButton.addActionListener(this);
+       hisComboBox.addActionListener(this);
+       accMenuItem0.addActionListener(this);
+       timeComboBox0.addActionListener(this);
+       timeComboBox1.addActionListener(this);
+       timeComboBox2.addActionListener(this);
+       timeComboBox3.addActionListener(this);
+   }
+   
+public CategoryDataset typeCreateDataset2() {
+       
+       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+       Iterator<String> itertype = typemap.keySet().iterator();
+       while(itertype.hasNext()) {
+            String ss = itertype.next();
+            dataset.setValue(typemap.get(ss),user_name,ss);
+       }
+       Iterator<String> itercmptype = cmp_typemap.keySet().iterator();
+       while(itercmptype.hasNext()) {
+            String ss = itercmptype.next();
+            dataset.setValue(cmp_typemap.get(ss),cmp_name,ss);
+       }
+       return dataset;
+   }
+   
+   public CategoryDataset typeCreateDataset() {
+       
+       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+       Iterator<String> itertype = typemap.keySet().iterator();
+       int index = 0;
+       while(itertype.hasNext()) {
+            String ss = itertype.next();
+            dataset.setValue(typemap.get(ss),user_name,ss);
+            index++;
+       }
+       return dataset;
+   }
+
+   public  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+   {
+   	JFreeChart chart=ChartFactory.createBarChart("hi", "类别", 
+               "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
+       chart.setTitle(new TextTitle("按分类题数",new Font("宋体",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
+       //chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+       CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
+       CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
+       categoryAxis.setLabelFont(new Font("黑体",Font.BOLD,16));//设置横坐标字体
+       //设置横坐标Label倾斜角度
+       categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+       BarRenderer render = (BarRenderer) plot.getRenderer();
+       render.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());//显示每个柱的数值 
+       render.setBaseItemLabelsVisible(true); 
+       //设置每组柱子间的间隔
+       //render.setItemMargin(0.0);
+      // plot.setBackgroundPaint(Color.lightGray);
+
+       
+       return chart;
+   }
+   
+   public  CategoryDataset timeCreateDataset3() //创建柱状图数据集
+   {	
+       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+       for(int i=0; i<num; i++) {
+       	dataset.setValue(timemap.get(timekey[i]),user_name,timekey[i]);
+       }
+       for(int i=0; i<cmp_num; i++) {
+          	dataset.setValue(cmp_timemap.get(cmp_timekey[i]),cmp_name,cmp_timekey[i]);
+          }
+       return dataset;
+   }
+   
+   public  CategoryDataset timeCreateDataset2()
+   {
+       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+       //System.out.println(t0+t1+t2+t3);
+       int a0 = Integer.parseInt(t0);
+       int a1 = Integer.parseInt(t1);
+       int a2 = Integer.parseInt(t2);
+       int a3 = Integer.parseInt(t3);
+       int index = 0;
+       for(int i=a0; i<=a2; i++)
+       {
+       	int l=1, r=12;
+       	if(i==a0) l = a1;
+       	if(i==a2) r = a3;
+       	for(int j=l; j<=r; j++)
+       	{
+       		String ss = "";
+       		ss = ss + String.valueOf(i);
+       		if(j<10) ss = ss + "0" + String.valueOf(j);
+       		else ss = ss + String.valueOf(j);
+       		if(timemap.containsKey(ss)) {
+       			dataset.setValue(timemap.get(ss), user_name, ss);
+       			index++;
+       		}
+       	}
+       }
+       return dataset;
+   }
+   
+   public  CategoryDataset timeCreateDataset() //创建柱状图数据集
+   {	
+       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
+       for(int i=0; i<num; i++) {
+       	dataset.setValue(timemap.get(timekey[i]),user_name,timekey[i]);
+       }
+       return dataset;
+   }
+   
+   public  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+   {
+   	JFreeChart chart = ChartFactory.createLineChart(
+               "按时间题数",   // chart title
+               null,                       // domain axis label
+               "题数",                   // range axis label
+               dataset,                         // data
+               PlotOrientation.VERTICAL,        // orientation
+               true,                           // include legend
+               true,                            // tooltips
+               false                            // urls
+           );
+   	
+           //chart.setBackgroundPaint(Color.white);
+
+           CategoryPlot plot = (CategoryPlot) chart.getPlot();
+           
+           //plot.setBackgroundPaint(Color.lightGray);
+           
+           plot.setRangeGridlinesVisible(false);
+           // customise the range axis...
+           NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+           rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+           // customise the renderer...
+           LineAndShapeRenderer renderer 
+                   = (LineAndShapeRenderer) plot.getRenderer();
+           renderer.setBaseShapesVisible(true);
+           renderer.setDrawOutlines(true);
+           renderer.setUseFillPaint(true);
+           renderer.setBaseFillPaint(Color.white);
+           renderer.setSeriesStroke(0, new BasicStroke(3.0f));
+           renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
+           renderer.setSeriesShape(0, new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
+           CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
+         //设置横坐标Label倾斜角度
+           categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+           renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());//显示每个柱的数值 
+           renderer.setBaseItemLabelsVisible(true); 
+           return chart;
+   }
+   
+   
+   public void firstLogin() {
+       boolean flag = true;
+       String tip = "请输入账号";
+       while(flag) {
+           user_name = JOptionPane.showInputDialog(null, tip, "", WIDTH);
+           
+           InfoDownload info_obj = new InfoDownload();
+           if(info_obj.init(user_name)) {
+               info_obj.getinfo();
+               account.setText(user_name);
+               flag = false;
+           }
+           else {
+               tip = "账号不存在，请重新输入";
+           }
+                   
+           /*
+           account.setText(user_name);
+           flag = false;
+       */
+       }
+   }
+
+
+   //获取分类的题数
+
+   void loadChart() {
+   	testPanel.setChart(typeCreateChart(typeCreateDataset()));
+   	//testPanel.setPreferredSize(new Dimension(1000,400));
+   }
+   
+   void initData() {
+       
+       //System.out.println("33333333");
+       DataCount dc = new DataCount();
+       dc.init(user_name);
+       timemap = dc.getdata();
+       //排序
+       num = 0;
+       Iterator<String> iter = timemap.keySet().iterator();
+       while(iter.hasNext()) {
+           //System.out.println("44444444");
+            String ss = iter.next();
+            //System.out.println(ss);
+            timekey[num] = ss;
+            num++;
+       }
+       //冒泡
+       for(int i=0; i<num-1; i++)
+       {
+       	for(int j=0; j<num-i-1; j++)
+       	{
+       		int j0 = Integer.parseInt(timekey[j]);
+       		int j1 = Integer.parseInt(timekey[j+1]);
+       		if(j0 > j1)
+       		{
+       			String tmp;
+       			tmp = timekey[j]; timekey[j] = timekey[j+1]; timekey[j+1] = tmp;
+       		}
+       	}
+       }
+       for(int i=0; i<num; i++) {
+       	System.out.println(timekey[i]);
+       }
+       
+       Iterator<String> itertime = timemap.keySet().iterator();
+       while(itertime.hasNext()) {
+            String ss = itertime.next();
+            System.out.println(ss+" "+timemap.get(ss));
+       }
+       typemap = dc.countType();
+       Iterator<String> itertype = typemap.keySet().iterator();
+       while(itertype.hasNext()) {
+           //System.out.println("44444444");
+            String ss = itertype.next();
+            System.out.println(ss+" "+typemap.get(ss));
+       }
+       
+   }
+   
+   void sort_cmp_time() {
+	   cmp_num = 0;
+       Iterator<String> iter = cmp_timemap.keySet().iterator();
+       while(iter.hasNext()) {
+           //System.out.println("44444444");
+            String ss = iter.next();
+            //System.out.println(ss);
+            cmp_timekey[cmp_num] = ss;
+            cmp_num++;
+       }
+       //冒泡
+       for(int i=0; i<cmp_num-1; i++)
+       {
+       	for(int j=0; j<cmp_num-i-1; j++)
+       	{
+       		int j0 = Integer.parseInt(cmp_timekey[j]);
+       		int j1 = Integer.parseInt(cmp_timekey[j+1]);
+       		if(j0 > j1)
+       		{
+       			String tmp;
+       			tmp = cmp_timekey[j]; cmp_timekey[j] = cmp_timekey[j+1]; cmp_timekey[j+1] = tmp;
+       		}
+       	}
+       }
+   }
+   
+   private void initCombobox() {
+      timeComboBox0.setVisible(false);
+      timeComboBox1.setVisible(false);
+      timeComboBox2.setVisible(false);
+      timeComboBox3.setVisible(false);
+      toLabel.setVisible(false);
+      his_Button.setVisible(false);
+      t0 = "2004";
+      t1 = "01";
+      t2 = "2004";
+      t3 = "01";
+   }
 }

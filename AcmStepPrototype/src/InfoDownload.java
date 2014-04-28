@@ -22,17 +22,34 @@ public class InfoDownload {
 	String time_regex;
 	String pro_regex;
 	String last_regex;
+	String solved_regex;
+	String rank_regex;
+	String submit_regex;
+	String prosolved_regex;
+	String submission_regex;
+	String accept_regex;
 	Pattern valid_pat;
 	Pattern runid_pat;
 	Pattern time_pat;
 	Pattern pro_pat;
 	Pattern last_pat;
+	Pattern solved_pat;
+	Pattern rank_pat;
+	Pattern submit_pat;
+	Pattern prosolved_pat;
+	Pattern submission_pat;
+	Pattern accept_pat;
 	Matcher valid_mat;
 	Matcher runid_mat;
 	Matcher time_mat;
 	Matcher pro_mat;
 	Matcher last_mat;
-	
+    Matcher solved_mat;	
+    Matcher rank_mat;
+    Matcher submit_mat;
+    Matcher prosolved_mat;
+    Matcher submission_mat;
+    Matcher accept_mat;
 	File file;
 	OutputStreamWriter write;
 	BufferedWriter bw;
@@ -50,8 +67,8 @@ public class InfoDownload {
 		urlstr="http://acm.hdu.edu.cn/userstatus.php?user="+username;
 		try{
 		url=new URL(urlstr);
-		InputStream in=url.openStream();
-		read = new InputStreamReader(in,"UTF-8"); 
+		in=url.openStream();
+		read = new InputStreamReader(in,"GBK"); 
 		br=new BufferedReader(read);
 		while((strline=br.readLine())!=null){
 			valid_mat=valid_pat.matcher(strline);
@@ -68,8 +85,8 @@ public class InfoDownload {
 		filename="E:\\doc\\"+username+"_profile.txt";
 		try{
 		url=new URL(urlstr);
-		InputStream in=url.openStream();
-		read = new InputStreamReader(in,"UTF-8"); 
+		in=url.openStream();
+		read = new InputStreamReader(in,"GBK"); 
 		br=new BufferedReader(read);
 		}
 		catch(Exception e){
@@ -78,7 +95,7 @@ public class InfoDownload {
 		
 		try{
 			file=new File(filename);
-			write = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+			write = new OutputStreamWriter(new FileOutputStream(file),"GBK");
 			bw=new BufferedWriter(write);
 			
 		}
@@ -91,11 +108,24 @@ public class InfoDownload {
 		time_regex="\\d+-\\d+-\\d+ \\d+:\\d+:\\d+";
 		pro_regex=">\\d+</a>";
 		last_regex="Next Page";
+		solved_regex="(\\d+,[1-9]\\d*,\\d+)";
+		rank_regex="td>Rank\\D+\\d+";
+		submit_regex="Problems Submitted\\D+\\d+";
+		prosolved_regex="Problems Solved\\D+\\d+";
+		submission_regex="td>Submissions\\D+\\d+";
+		accept_regex="Accepted\\D+\\d+";
+		
 		
 		runid_pat=Pattern.compile(runid_regex);
 		time_pat=Pattern.compile(time_regex);
 		pro_pat=Pattern.compile(pro_regex);
 		last_pat=Pattern.compile(last_regex);
+		solved_pat=Pattern.compile(solved_regex);
+		rank_pat=Pattern.compile(rank_regex);
+		submit_pat=Pattern.compile(submit_regex);
+		prosolved_pat=Pattern.compile(prosolved_regex);
+		submission_pat=Pattern.compile(submission_regex);
+		accept_pat=Pattern.compile(accept_regex);
 		
 		return true;
 	}
@@ -126,7 +156,7 @@ public class InfoDownload {
 			//bw.close();
 			url=new URL(urlstr);
 			in=url.openStream();
-			read = new InputStreamReader(in,"UTF-8"); 
+			read = new InputStreamReader(in,"GBK"); 
 			br=new BufferedReader(read);
 		}
 		
@@ -136,7 +166,59 @@ public class InfoDownload {
 		
 		}
 		
+		urlstr="http://acm.hdu.edu.cn/userstatus.php?user="+username;
+		filename="E:\\doc\\"+username+"_solvedproblem.txt";
+		try{
+		url=new URL(urlstr);
+		in=url.openStream();
+		read = new InputStreamReader(in,"GBK"); 
+		br=new BufferedReader(read);
+		file=new File(filename);
+		write = new OutputStreamWriter(new FileOutputStream(file),"GBK");
+		bw=new BufferedWriter(write);
+		
+		while((strline=br.readLine())!=null){
+			rank_mat=rank_pat.matcher(strline);
+			submit_mat=submit_pat.matcher(strline);
+			prosolved_mat=prosolved_pat.matcher(strline);
+			submission_mat=submission_pat.matcher(strline);
+			accept_mat=accept_pat.matcher(strline);
+			
+			
+			if(rank_mat.find()){
+				bw.write("Rank"+"\t"+rank_mat.group().substring(29));
+				bw.newLine();
+				}
+			if(submit_mat.find()){
+				bw.write("Problems_Submitted"+"\t"+submit_mat.group().substring(40));
+				bw.newLine();
+			}
+			if(prosolved_mat.find()){
+				bw.write("Problems_Solved"+"\t"+prosolved_mat.group().substring(37));
+				bw.newLine();
+			}
+			if(submission_mat.find()){
+				bw.write("Submissions"+"\t"+submission_mat.group().substring(36));
+				bw.newLine();
+			}
+			if(accept_mat.find()){
+				bw.write("Accepted"+"\t"+accept_mat.group().substring(30));
+				bw.newLine();
+			}
+			solved_mat=solved_pat.matcher(strline);
+			while(solved_mat.find()){
+				bw.write(solved_mat.group().replace(',', '\t'));
+				bw.newLine();
+			}
+		}
+		bw.flush();
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
-

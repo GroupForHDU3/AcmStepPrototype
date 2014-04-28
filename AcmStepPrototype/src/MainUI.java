@@ -4,13 +4,17 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,8 +43,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author Administrator
  */
 public class MainUI extends javax.swing.JFrame implements ActionListener {
-    String Zimu[] = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"}; 
-
+    
     /**
      * Creates new form MainUI
      */
@@ -87,6 +90,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         recommendationPanel = new javax.swing.JPanel();
         recomComboBox = new javax.swing.JComboBox();
         recomButton = new javax.swing.JButton();
+        recomLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         accountLabel = new javax.swing.JLabel();
         account = new javax.swing.JLabel();
@@ -358,9 +362,12 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
             recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(recommendationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(recomButton)
+                .addGroup(recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(recommendationPanelLayout.createSequentialGroup()
+                        .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(recomButton))
+                    .addComponent(recomLabel))
                 .addContainerGap(475, Short.MAX_VALUE))
         );
         recommendationPanelLayout.setVerticalGroup(
@@ -370,7 +377,9 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addGroup(recommendationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(recomComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(recomButton))
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(recomLabel)
+                .addContainerGap(371, Short.MAX_VALUE))
         );
 
         TabbedPane.addTab("荐题系统", recommendationPanel);
@@ -587,6 +596,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JButton recomButton;
     private javax.swing.JComboBox recomComboBox;
     private javax.swing.JPanel recommendationPanel;
+    private javax.swing.JLabel recomLabel;
     private javax.swing.JMenu sysMenu;
     private javax.swing.JMenuItem sysMenuItem0;
     private javax.swing.JMenuItem sysMenuItem1;
@@ -596,17 +606,21 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JComboBox timeComboBox2;
     private javax.swing.JComboBox timeComboBox3;
     private javax.swing.JLabel toLabel;
- // End of variables declaration                   
-    private String user_name;
-    private String cmp_name;
-    private Map<String,Integer> timemap;
-    private Map<String,Integer> typemap;
-    private Map<String,Integer> cmp_timemap;
-    private Map<String,Integer> cmp_typemap;
-    private String timekey[] = new String[1000];
-    private String cmp_timekey[] = new String[1000];
-    private int num, cmp_num;
-    private String t0, t1, t2, t3;
+ // End of variables declaration   
+    
+    private String user_name; //当前用户account
+    private String cmp_name; //对比账号account
+    private Map<String,Integer> timemap; //按时间的统计
+    private Map<String,Integer> typemap; //按分类的统计
+    private Map<String,Integer> cmp_timemap; //对比对象按时间的统计
+    private Map<String,Integer> cmp_typemap; //对比对象按分类的统计
+    private String timekey[] = new String[1000]; //按时间先后排序
+    private String cmp_timekey[] = new String[1000]; //按时间先后排序
+    private int num, cmp_num; // 排序后数组元素的个数
+    private String t0, t1, t2, t3; //按时间区间页，默认时间
+    private Map<String,Integer> cmpmap = new HashMap<String,Integer>(); //记录对比对象
+    private ArrayList<String> titleArray = new ArrayList<String>();
+    private String recomType;
     
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==hisComboBox)
@@ -673,26 +687,39 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         if(e.getSource()==disButton)
         {
         	cmp_name = disTextField.getText();
-        	InfoDownload cmp = new InfoDownload();
-        	if(cmp.init(cmp_name)) {
-        		cmp.getinfo();
+        	//System.out.println(cmp_name);
+        	//System.out.println(cmpmap.containsKey(cmp_name));
+        	if(!cmpmap.containsKey(cmp_name)) {
+        		InfoDownload cmp = new InfoDownload();
+        		if(cmp.init(cmp_name)) {
+        			cmpmap.put(cmp_name, 1);
+        			cmp.getinfo();
+        		}
+        		else {
+        			JOptionPane.showMessageDialog(null, "账号不存在");
+        		}
+        	}
+        	if(cmpmap.containsKey(cmp_name)) {
         		DataCount cmp_dc = new DataCount();
-        		if(cmp_dc.init(cmp_name)) {
-        			cmp_timemap = cmp_dc.getdata();
-        			cmp_typemap = cmp_dc.countType();
-        			sort_cmp_time();
-        		}
-        		int index = disComboBox.getSelectedIndex();
-        		if(index==0) {
-        			jPanel2.setChart(typeCreateChart(typeCreateDataset2()));
-        		}
-        		else if(index==1) {
-        			jPanel2.setChart(timeCreateChart(timeCreateDataset3()));
-        		}
+        		cmp_dc.init(cmp_name);
+        		cmp_timemap = cmp_dc.getdata();
+    			cmp_typemap = cmp_dc.countType();
+    			sort_cmp_time();
+    			int index = disComboBox.getSelectedIndex();
+    			if(index==0) {
+    				jPanel2.setChart(typeCreateChart(typeCreateDataset2()));
+    			}
+    			else if(index==1) {
+    				jPanel2.setChart(timeCreateChart(timeCreateDataset3()));
+    			}
         	}
-        	else {
-        		JOptionPane.showMessageDialog(null, "账号不存在");
-        	}
+        		
+        }
+        if(e.getSource()==recomComboBox) {
+        	recomType = recomComboBox.getSelectedItem().toString();
+        }
+        if(e.getSource()==recomButton) {
+        	showRecomTitle(recomType);
         }
    }
 
@@ -706,9 +733,11 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
        timeComboBox1.addActionListener(this);
        timeComboBox2.addActionListener(this);
        timeComboBox3.addActionListener(this);
+       recomButton.addActionListener(this);
+       recomComboBox.addActionListener(this);
    }
    
-public CategoryDataset typeCreateDataset2() {
+   private CategoryDataset typeCreateDataset2() {
        
        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
        Iterator<String> itertype = typemap.keySet().iterator();
@@ -724,7 +753,7 @@ public CategoryDataset typeCreateDataset2() {
        return dataset;
    }
    
-   public CategoryDataset typeCreateDataset() {
+private CategoryDataset typeCreateDataset() {
        
        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
        Iterator<String> itertype = typemap.keySet().iterator();
@@ -737,7 +766,7 @@ public CategoryDataset typeCreateDataset2() {
        return dataset;
    }
 
-   public  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+   private  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
    {
    	JFreeChart chart=ChartFactory.createBarChart("hi", "类别", 
                "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
@@ -759,7 +788,7 @@ public CategoryDataset typeCreateDataset2() {
        return chart;
    }
    
-   public  CategoryDataset timeCreateDataset3() //创建柱状图数据集
+   private  CategoryDataset timeCreateDataset3() //创建柱状图数据集
    {	
        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
        for(int i=0; i<num; i++) {
@@ -771,7 +800,7 @@ public CategoryDataset typeCreateDataset2() {
        return dataset;
    }
    
-   public  CategoryDataset timeCreateDataset2()
+   private  CategoryDataset timeCreateDataset2()
    {
        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
        //System.out.println(t0+t1+t2+t3);
@@ -800,7 +829,7 @@ public CategoryDataset typeCreateDataset2() {
        return dataset;
    }
    
-   public  CategoryDataset timeCreateDataset() //创建柱状图数据集
+   private  CategoryDataset timeCreateDataset() //创建柱状图数据集
    {	
        DefaultCategoryDataset dataset=new DefaultCategoryDataset();
        for(int i=0; i<num; i++) {
@@ -809,7 +838,7 @@ public CategoryDataset typeCreateDataset2() {
        return dataset;
    }
    
-   public  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
+   private  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
    {
    	JFreeChart chart = ChartFactory.createLineChart(
                "按时间题数",   // chart title
@@ -851,8 +880,22 @@ public CategoryDataset typeCreateDataset2() {
            return chart;
    }
    
+   private void showRecomTitle(String type) {
+	   titleArray = TypeTitle.getTypeTitle(recomType);
+	   String text = "<html>" + type + ":<br \\><br \\>";
+	   int index = 0;
+	   for(String tmp:titleArray) {
+		   text = text + tmp + "   ";
+		   index++;
+		   if(index%7==0)
+			   text = text + "<br \\><br \\>";
+	   }
+	   text = text + "<html\\>";
+	   recomLabel.setText(text);
+	   
+   }
    
-   public void firstLogin() {
+   private void firstLogin() {
        boolean flag = true;
        String tip = "请输入账号";
        while(flag) {
@@ -878,12 +921,12 @@ public CategoryDataset typeCreateDataset2() {
 
    //获取分类的题数
 
-   void loadChart() {
+  private void loadChart() {
    	testPanel.setChart(typeCreateChart(typeCreateDataset()));
    	//testPanel.setPreferredSize(new Dimension(1000,400));
    }
    
-   void initData() {
+ private void initData() {
        
        //System.out.println("33333333");
        DataCount dc = new DataCount();
@@ -932,7 +975,7 @@ public CategoryDataset typeCreateDataset2() {
        
    }
    
-   void sort_cmp_time() {
+   private void sort_cmp_time() {
 	   cmp_num = 0;
        Iterator<String> iter = cmp_timemap.keySet().iterator();
        while(iter.hasNext()) {

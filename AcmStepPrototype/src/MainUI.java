@@ -4,6 +4,14 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +22,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.JFileChooser;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -440,6 +449,42 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         docMenu.add(docMenuItem0);
 
         docMenuItem1.setText("导入分类");
+        docMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                //docMenuItem0ActionPerformed(evt);
+            	JFileChooser fd = new JFileChooser();
+            	//fd.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            	fd.showOpenDialog(null);
+            	File sourceFile = fd.getSelectedFile();
+            	String sort = "E:\\doc\\sort.txt";
+            	File targetFile = new File(sort);
+            	
+            	if(sourceFile != null){
+            		FileInputStream fi = null;
+                    FileOutputStream fo = null;
+                    FileChannel in = null;
+                    FileChannel out = null;
+                    try {
+                        fi = new FileInputStream(sourceFile);
+                        fo = new FileOutputStream(targetFile);
+                        in = fi.getChannel();//得到对应的文件通道
+                        out = fo.getChannel();//得到对应的文件通道
+                        in.transferTo(0, in.size(), out);//连接两个通道，并且从in通道读取，然后写入out通道
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            fi.close();
+                            in.close();
+                            fo.close();
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            	}
+            }
+        });
         docMenu.add(docMenuItem1);
 
         MenuBar.add(docMenu);

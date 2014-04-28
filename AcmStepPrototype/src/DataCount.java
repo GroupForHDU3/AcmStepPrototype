@@ -119,6 +119,37 @@ public class DataCount {
 		}
         return ret;
     }
+    public static String[] firstAccept(String username) {
+    	String str[] = new String[3];
+    	String s[];
+    	int num = 0;
+    	try {
+    		BufferedReader reader = new BufferedReader(new FileReader(new File("E:\\doc\\"+ username + "_solvedproblem.txt")));
+    		String line = reader.readLine();
+    		s = line.split("\t");
+    		str[0] = s[1];
+    		line = reader.readLine();
+    		line = reader.readLine();
+    		s = line.split("\t");
+    		str[1] = s[1];
+    		line = reader.readLine();
+    		line = reader.readLine();
+    		while((line=reader.readLine())!=null) {
+    			s = line.split("\t");
+    			if(s[2].equals("1")) {
+    				num++;
+    			}
+    		}
+    		str[2] = String.valueOf(num);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return str;
+    }
 	//public 
 	/**
 	 * @param args

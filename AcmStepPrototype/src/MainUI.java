@@ -71,7 +71,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
+    	mainPanel = new javax.swing.JPanel();
         TabbedPane = new javax.swing.JTabbedPane();
         historyPanel = new javax.swing.JPanel();
         hisComboBox = new javax.swing.JComboBox();
@@ -84,12 +84,14 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         timeComboBox2 = new javax.swing.JComboBox();
         timeComboBox3 = new javax.swing.JComboBox();
         lightPointPanel = new javax.swing.JPanel();
-        lightPoint0 = new javax.swing.JPanel();
-        lightPoint1 = new javax.swing.JPanel();
-        lightPoint2 = new javax.swing.JPanel();
-        lightPoint3 = new javax.swing.JPanel();
-        lightPoint4 = new javax.swing.JPanel();
-        lightPoint5 = new javax.swing.JPanel();
+        lightPanel0 = new javax.swing.JPanel();
+        lightLabel0 = new javax.swing.JLabel();
+        lightPanel1 = new javax.swing.JPanel();
+        lightLabel1 = new javax.swing.JLabel();
+        lightPanel2 = new javax.swing.JPanel();
+        lightLabel2 = new javax.swing.JLabel();
+        lightPanel3 = new javax.swing.JPanel();
+        lightLabel3 = new javax.swing.JLabel();
         distencePanel = new javax.swing.JPanel();
         disLabel = new javax.swing.JLabel();
         disTextField = new javax.swing.JTextField();
@@ -203,102 +205,85 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
 
         TabbedPane.addTab("我的历史", historyPanel);
 
-        javax.swing.GroupLayout lightPoint0Layout = new javax.swing.GroupLayout(lightPoint0);
-        lightPoint0.setLayout(lightPoint0Layout);
-        lightPoint0Layout.setHorizontalGroup(
-            lightPoint0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout lightPanel0Layout = new javax.swing.GroupLayout(lightPanel0);
+        lightPanel0.setLayout(lightPanel0Layout);
+        lightPanel0Layout.setHorizontalGroup(
+            lightPanel0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel0Layout.createSequentialGroup()
+                .addComponent(lightLabel0)
+                .addGap(0, 622, Short.MAX_VALUE))
         );
-        lightPoint0Layout.setVerticalGroup(
-            lightPoint0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout lightPoint1Layout = new javax.swing.GroupLayout(lightPoint1);
-        lightPoint1.setLayout(lightPoint1Layout);
-        lightPoint1Layout.setHorizontalGroup(
-            lightPoint1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        lightPoint1Layout.setVerticalGroup(
-            lightPoint1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        lightPanel0Layout.setVerticalGroup(
+            lightPanel0Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel0Layout.createSequentialGroup()
+                .addComponent(lightLabel0)
+                .addGap(0, 85, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout lightPoint2Layout = new javax.swing.GroupLayout(lightPoint2);
-        lightPoint2.setLayout(lightPoint2Layout);
-        lightPoint2Layout.setHorizontalGroup(
-            lightPoint2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 192, Short.MAX_VALUE)
+        javax.swing.GroupLayout lightPanel1Layout = new javax.swing.GroupLayout(lightPanel1);
+        lightPanel1.setLayout(lightPanel1Layout);
+        lightPanel1Layout.setHorizontalGroup(
+            lightPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel1Layout.createSequentialGroup()
+                .addComponent(lightLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        lightPoint2Layout.setVerticalGroup(
-            lightPoint2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout lightPoint3Layout = new javax.swing.GroupLayout(lightPoint3);
-        lightPoint3.setLayout(lightPoint3Layout);
-        lightPoint3Layout.setHorizontalGroup(
-            lightPoint3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        lightPoint3Layout.setVerticalGroup(
-            lightPoint3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
+        lightPanel1Layout.setVerticalGroup(
+            lightPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel1Layout.createSequentialGroup()
+                .addComponent(lightLabel1)
+                .addGap(0, 85, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout lightPoint4Layout = new javax.swing.GroupLayout(lightPoint4);
-        lightPoint4.setLayout(lightPoint4Layout);
-        lightPoint4Layout.setHorizontalGroup(
-            lightPoint4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout lightPanel2Layout = new javax.swing.GroupLayout(lightPanel2);
+        lightPanel2.setLayout(lightPanel2Layout);
+        lightPanel2Layout.setHorizontalGroup(
+            lightPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel2Layout.createSequentialGroup()
+                .addComponent(lightLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        lightPoint4Layout.setVerticalGroup(
-            lightPoint4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        lightPanel2Layout.setVerticalGroup(
+            lightPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel2Layout.createSequentialGroup()
+                .addComponent(lightLabel2)
+                .addGap(0, 85, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout lightPoint5Layout = new javax.swing.GroupLayout(lightPoint5);
-        lightPoint5.setLayout(lightPoint5Layout);
-        lightPoint5Layout.setHorizontalGroup(
-            lightPoint5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout lightPanel3Layout = new javax.swing.GroupLayout(lightPanel3);
+        lightPanel3.setLayout(lightPanel3Layout);
+        lightPanel3Layout.setHorizontalGroup(
+            lightPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel3Layout.createSequentialGroup()
+                .addComponent(lightLabel3)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        lightPoint5Layout.setVerticalGroup(
-            lightPoint5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        lightPanel3Layout.setVerticalGroup(
+            lightPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(lightPanel3Layout.createSequentialGroup()
+                .addComponent(lightLabel3)
+                .addGap(0, 123, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout lightPointPanelLayout = new javax.swing.GroupLayout(lightPointPanel);
         lightPointPanel.setLayout(lightPointPanelLayout);
         lightPointPanelLayout.setHorizontalGroup(
             lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lightPointPanelLayout.createSequentialGroup()
-                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lightPoint3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint0, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lightPoint1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lightPoint2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(lightPanel0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lightPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lightPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lightPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         lightPointPanelLayout.setVerticalGroup(
             lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lightPointPanelLayout.createSequentialGroup()
-                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lightPoint0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lightPanel0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lightPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(lightPointPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lightPoint3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lightPoint5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lightPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -595,6 +580,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 //System.out.println("11111");
                 godUI.initData();
                 godUI.loadChart();
+                godUI.initLightPoint();
                 //System.out.println("22222");
                 /*
                 Map<String,Integer> k = godUI.countType();
@@ -608,7 +594,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         });
     }
 
-    // Variables declaration - do not modify                     
+ // Variables declaration - do not modify                     
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JTabbedPane TabbedPane;
     private javax.swing.JMenuItem accMenuItem0;
@@ -630,12 +616,14 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel historyPanel;
     private javax.swing.JPanel jPanel1;
     private ChartPanel jPanel2;
-    private javax.swing.JPanel lightPoint0;
-    private javax.swing.JPanel lightPoint1;
-    private javax.swing.JPanel lightPoint2;
-    private javax.swing.JPanel lightPoint3;
-    private javax.swing.JPanel lightPoint4;
-    private javax.swing.JPanel lightPoint5;
+    private javax.swing.JLabel lightLabel0;
+    private javax.swing.JLabel lightLabel1;
+    private javax.swing.JLabel lightLabel2;
+    private javax.swing.JLabel lightLabel3;
+    private javax.swing.JPanel lightPanel0;
+    private javax.swing.JPanel lightPanel1;
+    private javax.swing.JPanel lightPanel2;
+    private javax.swing.JPanel lightPanel3;
     private javax.swing.JPanel lightPointPanel;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton recomButton;
@@ -651,7 +639,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JComboBox timeComboBox2;
     private javax.swing.JComboBox timeComboBox3;
     private javax.swing.JLabel toLabel;
- // End of variables declaration   
+ // End of variables declaration 
     
     private String user_name; //当前用户account
     private String cmp_name; //对比账号account
@@ -1019,6 +1007,16 @@ private CategoryDataset typeCreateDataset() {
        }
        
    }
+ private void initLightPoint()
+	{
+		String str[] = DataCount.firstAccept(user_name);
+		String label0 = "你的排名为【" + str[0] + "】" + ",已完成【" + str[1] + "】道题";
+		String label1 = "你有【" + str[2] + "】道题第一次提交就获得Accept";
+		lightLabel0.setText(label0);
+		lightPanel0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		lightLabel1.setText(label1);
+		lightPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+	}
    
    private void sort_cmp_time() {
 	   cmp_num = 0;

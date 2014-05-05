@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -105,6 +106,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         jPanel1 = new javax.swing.JPanel();
         accountLabel = new javax.swing.JLabel();
         account = new javax.swing.JLabel();
+        bar = new javax.swing.JLabel();
         MenuBar = new javax.swing.JMenuBar();
         docMenu = new javax.swing.JMenu();
         docMenuItem0 = new javax.swing.JMenuItem();
@@ -391,17 +393,20 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 .addComponent(accountLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(account)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(bar)
+                .addGap(69, 69, 69))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(accountLabel)
-                    .addComponent(account))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(accountLabel)
+                        .addComponent(account)
+                        .addComponent(bar))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -601,6 +606,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel account;
     private javax.swing.JLabel accountLabel;
     private javax.swing.JMenu accountMenu;
+    private javax.swing.JLabel bar;
     private javax.swing.JButton disButton;
     private javax.swing.JComboBox disComboBox;
     private javax.swing.JLabel disLabel;
@@ -651,9 +657,11 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private String cmp_timekey[] = new String[1000]; //按时间先后排序
     private int num, cmp_num; // 排序后数组元素的个数
     private String t0, t1, t2, t3; //按时间区间页，默认时间
-    private Map<String,Integer> cmpmap = new HashMap<String,Integer>(); //记录对比对象
+    private Map<String,Integer> usermap = new HashMap<String,Integer>(); //记录对比对象
     private ArrayList<String> titleArray = new ArrayList<String>();
     private String recomType;
+    
+    private String barPath = "E:\\doc\\2010829142847501.gif";
     
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==hisComboBox)
@@ -692,7 +700,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         }
         if(e.getSource()==accMenuItem0)
         {
-       	 firstLogin();
+       	 	firstLogin();
             //System.out.println("11111");
             initData();
             loadChart();
@@ -722,17 +730,17 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         	cmp_name = disTextField.getText();
         	//System.out.println(cmp_name);
         	//System.out.println(cmpmap.containsKey(cmp_name));
-        	if(!cmpmap.containsKey(cmp_name)) {
+        	if(!usermap.containsKey(cmp_name)) {
         		InfoDownload cmp = new InfoDownload();
         		if(cmp.init(cmp_name)) {
-        			cmpmap.put(cmp_name, 1);
+        			usermap.put(cmp_name, 1);
         			cmp.getinfo();
         		}
         		else {
         			JOptionPane.showMessageDialog(null, "账号不存在");
         		}
         	}
-        	if(cmpmap.containsKey(cmp_name)) {
+        	if(usermap.containsKey(cmp_name)) {
         		DataCount cmp_dc = new DataCount();
         		cmp_dc.init(cmp_name);
         		cmp_timemap = cmp_dc.getdata();
@@ -915,7 +923,7 @@ private CategoryDataset typeCreateDataset() {
    
    private void showRecomTitle(String type) {
 	   titleArray = TypeTitle.getTypeTitle(recomType);
-	   String text = "<html>" + type + ":<br \\><br \\>";
+	   String text = "<html>";
 	   int index = 0;
 	   for(String tmp:titleArray) {
 		   text = text + tmp + "   ";
@@ -932,11 +940,23 @@ private CategoryDataset typeCreateDataset() {
        boolean flag = true;
        String tip = "请输入账号";
        while(flag) {
-           user_name = JOptionPane.showInputDialog(null, tip, "", WIDTH);
-           
+           String input = JOptionPane.showInputDialog(null, tip, "", WIDTH);
+           if(input==null) {
+        	   if(user_name==null)
+        		   continue;
+        	   else
+        		   break;
+           }
+           if(usermap.containsKey(input)) {
+        	   user_name = input;
+        	   account.setText(user_name);
+        	   break;
+           }
            InfoDownload info_obj = new InfoDownload();
-           if(info_obj.init(user_name)) {
-               info_obj.getinfo();
+           if(info_obj.init(input)) {
+        	   user_name = input;
+        	   info_obj.getinfo();
+               usermap.put(user_name, 1);
                account.setText(user_name);
                flag = false;
            }
@@ -1012,10 +1032,26 @@ private CategoryDataset typeCreateDataset() {
 		String str[] = DataCount.firstAccept(user_name);
 		String label0 = "你的排名为【" + str[0] + "】" + ",已完成【" + str[1] + "】道题";
 		String label1 = "你有【" + str[2] + "】道题第一次提交就获得Accept";
+		int num = 0;
+		String label2 = "你在 ";
+		Iterator<String> itertime = timemap.keySet().iterator();
+		while(itertime.hasNext()) {
+			String ss = itertime.next();
+			int numm = timemap.get(ss);
+			if(numm>=50) {
+				label2 = label2 + "【" + ss.substring(0, 4) + "年" + ss.substring(4, 6) + "月" + "】 ";
+				num++;
+			}
+		}
+		label2 = label2 + "完成了【50】道题以上";
 		lightLabel0.setText(label0);
 		lightPanel0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		lightLabel1.setText(label1);
 		lightPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		if(num>0) {
+			lightLabel2.setText(label2);
+			lightPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+		}
 	}
    
    private void sort_cmp_time() {
@@ -1029,19 +1065,19 @@ private CategoryDataset typeCreateDataset() {
             cmp_num++;
        }
        //冒泡
-       for(int i=0; i<cmp_num-1; i++)
-       {
-       	for(int j=0; j<cmp_num-i-1; j++)
-       	{
-       		int j0 = Integer.parseInt(cmp_timekey[j]);
-       		int j1 = Integer.parseInt(cmp_timekey[j+1]);
-       		if(j0 > j1)
-       		{
-       			String tmp;
-       			tmp = cmp_timekey[j]; cmp_timekey[j] = cmp_timekey[j+1]; cmp_timekey[j+1] = tmp;
-       		}
-       	}
-       }
+	   for(int i=0; i<cmp_num-1; i++)
+	   {
+			for(int j=0; j<cmp_num-i-1; j++)
+			{
+				int j0 = Integer.parseInt(cmp_timekey[j]);
+				int j1 = Integer.parseInt(cmp_timekey[j+1]);
+				if(j0 > j1)
+				{
+					String tmp;
+					tmp = cmp_timekey[j]; cmp_timekey[j] = cmp_timekey[j+1]; cmp_timekey[j+1] = tmp;
+				}
+			}
+	   }
    }
    
    private void initCombobox() {
@@ -1055,5 +1091,7 @@ private CategoryDataset typeCreateDataset() {
       t1 = "01";
       t2 = "2004";
       t3 = "01";
+      helpMenu.setVisible(false);
+      docMenuItem0.setVisible(false);
    }
 }

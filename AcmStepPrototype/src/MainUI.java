@@ -576,25 +576,10 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 MainUI godUI = new MainUI();
                 godUI.setLocationRelativeTo(null); //窗口居中
                 godUI.setVisible(true);
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(MainUI.class.getName()).log(Level.SEVERE, null, ex);
-//                }
                 godUI.firstLogin();
-                //System.out.println("11111");
                 godUI.initData();
                 godUI.loadChart();
                 godUI.initLightPoint();
-                //System.out.println("22222");
-                /*
-                Map<String,Integer> k = godUI.countType();
-                Iterator<String> iterator = typemap.keySet().iterator();
-                while(iterator.hasNext()) {
-                     String ss = iterator.next();
-                     System.out.println(ss+" "+k.get(ss));
-                }
-                  */      
             }
         });
     }
@@ -659,9 +644,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private String t0, t1, t2, t3; //按时间区间页，默认时间
     private Map<String,Integer> usermap = new HashMap<String,Integer>(); //记录对比对象
     private ArrayList<String> titleArray = new ArrayList<String>();
-    private String recomType;
-    
-    private String barPath = "E:\\doc\\2010829142847501.gif";
+    private String recomType = "默认推荐";
     
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==hisComboBox)
@@ -685,7 +668,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 timeComboBox3.setVisible(false);
                 toLabel.setVisible(false);
                 his_Button.setVisible(false);
-                testPanel.setChart(typeCreateChart(typeCreateDataset()));
+                testPanel.setChart(ChartCreater.typeCreateChart(ChartCreater.typeCreateDataset(typemap, user_name)));
             }
             if(index==1)
             {
@@ -695,7 +678,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                 timeComboBox3.setVisible(false);
                 toLabel.setVisible(false);
                 his_Button.setVisible(false);
-                testPanel.setChart(timeCreateChart(timeCreateDataset()));
+                testPanel.setChart(ChartCreater.timeCreateChart(ChartCreater.timeCreateDataset(num, timemap, timekey, user_name)));
             }
         }
         if(e.getSource()==accMenuItem0)
@@ -723,7 +706,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         }
         if(e.getSource()==his_Button) 
         {
-       	 testPanel.setChart(timeCreateChart(timeCreateDataset2()));
+       	 testPanel.setChart(ChartCreater.timeCreateChart(ChartCreater.timeCreateDataset2(t0, t1, t2, t3, timemap, user_name)));
         }
         if(e.getSource()==disButton)
         {
@@ -748,10 +731,11 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     			sort_cmp_time();
     			int index = disComboBox.getSelectedIndex();
     			if(index==0) {
-    				jPanel2.setChart(typeCreateChart(typeCreateDataset2()));
+    				jPanel2.setChart(ChartCreater.typeCreateChart(ChartCreater.typeCreateDataset2(typemap, user_name, cmp_typemap, cmp_name)));
     			}
     			else if(index==1) {
-    				jPanel2.setChart(timeCreateChart(timeCreateDataset3()));
+    				jPanel2.setChart(ChartCreater.timeCreateChart(ChartCreater.timeCreateDataset3(num, timemap, timekey, user_name, 
+    						   cmp_num, cmp_timekey, cmp_timemap, cmp_name)));
     			}
         	}
         		
@@ -778,150 +762,15 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
        recomComboBox.addActionListener(this);
    }
    
-   private CategoryDataset typeCreateDataset2() {
-       
-       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-       Iterator<String> itertype = typemap.keySet().iterator();
-       while(itertype.hasNext()) {
-            String ss = itertype.next();
-            dataset.setValue(typemap.get(ss),user_name,ss);
-       }
-       Iterator<String> itercmptype = cmp_typemap.keySet().iterator();
-       while(itercmptype.hasNext()) {
-            String ss = itercmptype.next();
-            dataset.setValue(cmp_typemap.get(ss),cmp_name,ss);
-       }
-       return dataset;
-   }
-   
-private CategoryDataset typeCreateDataset() {
-       
-       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-       Iterator<String> itertype = typemap.keySet().iterator();
-       int index = 0;
-       while(itertype.hasNext()) {
-            String ss = itertype.next();
-            dataset.setValue(typemap.get(ss),user_name,ss);
-            index++;
-       }
-       return dataset;
-   }
-
-   private  JFreeChart typeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
-   {
-   	JFreeChart chart=ChartFactory.createBarChart("hi", "类别", 
-               "题数", dataset, PlotOrientation.VERTICAL, true, true, false); //创建一个JFreeChart
-       chart.setTitle(new TextTitle("按分类题数",new Font("宋体",Font.BOLD+Font.ITALIC,20)));//可以重新设置标题，替换“hi”标题
-       //chart.getRenderingHints().put(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-       CategoryPlot plot=(CategoryPlot)chart.getPlot();//获得图标中间部分，即plot
-       CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-       categoryAxis.setLabelFont(new Font("黑体",Font.BOLD,16));//设置横坐标字体
-       //设置横坐标Label倾斜角度
-       categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-       BarRenderer render = (BarRenderer) plot.getRenderer();
-       render.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());//显示每个柱的数值 
-       render.setBaseItemLabelsVisible(true); 
-       //设置每组柱子间的间隔
-       //render.setItemMargin(0.0);
-      // plot.setBackgroundPaint(Color.lightGray);
-
-       
-       return chart;
-   }
-   
-   private  CategoryDataset timeCreateDataset3() //创建柱状图数据集
-   {	
-       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-       for(int i=0; i<num; i++) {
-       	dataset.setValue(timemap.get(timekey[i]),user_name,timekey[i]);
-       }
-       for(int i=0; i<cmp_num; i++) {
-          	dataset.setValue(cmp_timemap.get(cmp_timekey[i]),cmp_name,cmp_timekey[i]);
-          }
-       return dataset;
-   }
-   
-   private  CategoryDataset timeCreateDataset2()
-   {
-       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-       //System.out.println(t0+t1+t2+t3);
-       int a0 = Integer.parseInt(t0);
-       int a1 = Integer.parseInt(t1);
-       int a2 = Integer.parseInt(t2);
-       int a3 = Integer.parseInt(t3);
-       int index = 0;
-       for(int i=a0; i<=a2; i++)
-       {
-       	int l=1, r=12;
-       	if(i==a0) l = a1;
-       	if(i==a2) r = a3;
-       	for(int j=l; j<=r; j++)
-       	{
-       		String ss = "";
-       		ss = ss + String.valueOf(i);
-       		if(j<10) ss = ss + "0" + String.valueOf(j);
-       		else ss = ss + String.valueOf(j);
-       		if(timemap.containsKey(ss)) {
-       			dataset.setValue(timemap.get(ss), user_name, ss);
-       			index++;
-       		}
-       	}
-       }
-       return dataset;
-   }
-   
-   private  CategoryDataset timeCreateDataset() //创建柱状图数据集
-   {	
-       DefaultCategoryDataset dataset=new DefaultCategoryDataset();
-       for(int i=0; i<num; i++) {
-       	dataset.setValue(timemap.get(timekey[i]),user_name,timekey[i]);
-       }
-       return dataset;
-   }
-   
-   private  JFreeChart timeCreateChart(CategoryDataset dataset) //用数据集创建一个图表
-   {
-   	JFreeChart chart = ChartFactory.createLineChart(
-               "按时间题数",   // chart title
-               null,                       // domain axis label
-               "题数",                   // range axis label
-               dataset,                         // data
-               PlotOrientation.VERTICAL,        // orientation
-               true,                           // include legend
-               true,                            // tooltips
-               false                            // urls
-           );
-   	
-           //chart.setBackgroundPaint(Color.white);
-
-           CategoryPlot plot = (CategoryPlot) chart.getPlot();
-           
-           //plot.setBackgroundPaint(Color.lightGray);
-           
-           plot.setRangeGridlinesVisible(false);
-           // customise the range axis...
-           NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-           rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-           // customise the renderer...
-           LineAndShapeRenderer renderer 
-                   = (LineAndShapeRenderer) plot.getRenderer();
-           renderer.setBaseShapesVisible(true);
-           renderer.setDrawOutlines(true);
-           renderer.setUseFillPaint(true);
-           renderer.setBaseFillPaint(Color.white);
-           renderer.setSeriesStroke(0, new BasicStroke(3.0f));
-           renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
-           renderer.setSeriesShape(0, new Ellipse2D.Double(-5.0, -5.0, 10.0, 10.0));
-           CategoryAxis categoryAxis=plot.getDomainAxis();//获得横坐标
-         //设置横坐标Label倾斜角度
-           categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-           renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());//显示每个柱的数值 
-           renderer.setBaseItemLabelsVisible(true); 
-           return chart;
-   }
    
    private void showRecomTitle(String type) {
+	   if(type.equals("默认推荐")) {
+		   String text = "<html>";
+		   text += "1595 1730 2017 2084 2723";
+		   text = text + "<html\\>";
+		   recomLabel.setText(text);
+		   return;
+	   }
 	   titleArray = TypeTitle.getTypeTitle(recomType);
 	   String text = "<html>";
 	   int index = 0;
@@ -963,11 +812,6 @@ private CategoryDataset typeCreateDataset() {
            else {
                tip = "账号不存在，请重新输入";
            }
-                   
-           /*
-           account.setText(user_name);
-           flag = false;
-       */
        }
    }
 
@@ -975,7 +819,7 @@ private CategoryDataset typeCreateDataset() {
    //获取分类的题数
 
   private void loadChart() {
-   	testPanel.setChart(typeCreateChart(typeCreateDataset()));
+   	testPanel.setChart(ChartCreater.typeCreateChart(ChartCreater.typeCreateDataset(typemap, user_name)));
    	//testPanel.setPreferredSize(new Dimension(1000,400));
    }
    
@@ -1009,21 +853,23 @@ private CategoryDataset typeCreateDataset() {
        		}
        	}
        }
+       /*
        for(int i=0; i<num; i++) {
        	System.out.println(timekey[i]);
        }
+       */
        
        Iterator<String> itertime = timemap.keySet().iterator();
        while(itertime.hasNext()) {
             String ss = itertime.next();
-            System.out.println(ss+" "+timemap.get(ss));
+            //System.out.println(ss+" "+timemap.get(ss));
        }
        typemap = dc.countType();
        Iterator<String> itertype = typemap.keySet().iterator();
        while(itertype.hasNext()) {
            //System.out.println("44444444");
             String ss = itertype.next();
-            System.out.println(ss+" "+typemap.get(ss));
+            //System.out.println(ss+" "+typemap.get(ss));
        }
        
    }
@@ -1058,9 +904,7 @@ private CategoryDataset typeCreateDataset() {
 	   cmp_num = 0;
        Iterator<String> iter = cmp_timemap.keySet().iterator();
        while(iter.hasNext()) {
-           //System.out.println("44444444");
             String ss = iter.next();
-            //System.out.println(ss);
             cmp_timekey[cmp_num] = ss;
             cmp_num++;
        }

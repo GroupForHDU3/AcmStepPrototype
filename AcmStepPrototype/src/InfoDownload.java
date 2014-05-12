@@ -68,7 +68,7 @@ public class InfoDownload {
 		try{
 		url=new URL(urlstr);
 		in=url.openStream();
-		read = new InputStreamReader(in,"GBK"); 
+		read = new InputStreamReader(in,"UTF-8"); 
 		br=new BufferedReader(read);
 		while((strline=br.readLine())!=null){
 			valid_mat=valid_pat.matcher(strline);
@@ -86,7 +86,7 @@ public class InfoDownload {
 		try{
 		url=new URL(urlstr);
 		in=url.openStream();
-		read = new InputStreamReader(in,"GBK"); 
+		read = new InputStreamReader(in,"UTF-8"); 
 		br=new BufferedReader(read);
 		}
 		catch(Exception e){
@@ -95,7 +95,7 @@ public class InfoDownload {
 		
 		try{
 			file=new File(filename);
-			write = new OutputStreamWriter(new FileOutputStream(file),"GBK");
+			write = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 			bw=new BufferedWriter(write);
 			
 		}
@@ -156,7 +156,7 @@ public class InfoDownload {
 			//bw.close();
 			url=new URL(urlstr);
 			in=url.openStream();
-			read = new InputStreamReader(in,"GBK"); 
+			read = new InputStreamReader(in,"UTF-8"); 
 			br=new BufferedReader(read);
 		}
 		
@@ -171,10 +171,10 @@ public class InfoDownload {
 		try{
 		url=new URL(urlstr);
 		in=url.openStream();
-		read = new InputStreamReader(in,"GBK"); 
+		read = new InputStreamReader(in,"UTF-8"); 
 		br=new BufferedReader(read);
 		file=new File(filename);
-		write = new OutputStreamWriter(new FileOutputStream(file),"GBK");
+		write = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
 		bw=new BufferedWriter(write);
 		
 		while((strline=br.readLine())!=null){

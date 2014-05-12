@@ -49,7 +49,7 @@ public class DataCountTest {
 	//测试某个账号的排名、解决的问题以及第一次通过的题数是否和预期值一样
 	@Test
 	public void testfirstAccept(){
-		String expected_str0="1354";
+		String expected_str0="1358";
 		String expected_str1="282";
 		String expected_str2="161";
 		String not_expected="100";

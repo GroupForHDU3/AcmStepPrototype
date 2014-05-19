@@ -6,11 +6,15 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,6 +115,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         docMenu = new javax.swing.JMenu();
         docMenuItem0 = new javax.swing.JMenuItem();
         docMenuItem1 = new javax.swing.JMenuItem();
+        docMenuItem2 = new javax.swing.JMenuItem();
         accountMenu = new javax.swing.JMenu();
         accMenuItem0 = new javax.swing.JMenuItem();
         sysMenu = new javax.swing.JMenu();
@@ -430,10 +435,31 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
         docMenu.setText("文件");
         docMenu.setToolTipText("");
 
-        docMenuItem0.setText("导出文件");
+        docMenuItem0.setText("导出分类");
         docMenuItem0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                docMenuItem0ActionPerformed(evt);
+                //docMenuItem0ActionPerformed(evt);
+            	String str = new String();
+            	try {
+            		FileReader fr = new FileReader("E:\\doc\\sort.txt");
+                    BufferedReader br=new BufferedReader(fr);
+                    JFileChooser jf = new JFileChooser();
+                    jf.setFileSelectionMode(JFileChooser.SAVE_DIALOG | JFileChooser.DIRECTORIES_ONLY);
+                    jf.showDialog(null,null);
+                    File fi = jf.getSelectedFile();
+                    String f = fi.getAbsolutePath()+"\\sort.txt";
+                    System.out.println("save: "+f);
+                    //FileWriter out = new FileWriter(f);
+                    BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(f))));
+                    while((str = br.readLine())!=null) {
+                        out.write(str);
+                        out.newLine();
+                        out.flush();
+                    }
+                    br.close();
+                    out.close();
+            	}
+            	catch(Exception e){}
             }
         });
         docMenu.add(docMenuItem0);
@@ -473,9 +499,15 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
                         }
                     }
             	}
+            	initData();
+            	loadChart();
             }
         });
         docMenu.add(docMenuItem1);
+        
+        docMenuItem2.setText("编辑分类");
+        docMenu.add(docMenuItem2);
+        
 
         MenuBar.add(docMenu);
 
@@ -600,6 +632,7 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JMenu docMenu;
     private javax.swing.JMenuItem docMenuItem0;
     private javax.swing.JMenuItem docMenuItem1;
+    private javax.swing.JMenuItem docMenuItem2;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JComboBox hisComboBox;
     private javax.swing.JPanel hisPanel1;
@@ -936,6 +969,6 @@ public class MainUI extends javax.swing.JFrame implements ActionListener {
       t2 = "2004";
       t3 = "01";
       helpMenu.setVisible(false);
-      docMenuItem0.setVisible(false);
+      //docMenuItem0.setVisible(false);
    }
 }
